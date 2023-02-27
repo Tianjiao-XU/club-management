@@ -43,7 +43,68 @@ body {
     color: black;
 }
 
+/* 列容器 */
+.searchbar {
+	background-color: #1abc9c;
+	overflow: hidden;
+	height: 250px;
+}
 
+/* 搜索 */
+.search {
+    padding: 10px;
+    display: flex;
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+	
+.searchTerm {
+	border: 1px solid #b1b1b1;
+	height: 40px;
+	color: #9DBFAF;
+	outline: none;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+	
+.searchbar h1 {
+    display: block;
+    color: black;
+	text-align: center;
+    font-size: 30px;
+}	
+		
+
+.searchbar a {
+	display: block;
+	justify-content: center;
+    align-items: center;
+	position: absolute;
+    left:50%;
+    color: white;
+	text-align: center;
+    font-size: 20px;	
+	background-color: #000000;
+	border-radius: 10px;
+	padding: 10px;
+}	
+	
+
+	
 /* 列容器 */
 .row {
     display: -ms-flexbox; /* IE10 */
@@ -57,7 +118,7 @@ body {
     -ms-flex: 20%; /* IE10 */
     flex: 20%;
     background-color: #f1f1f1;
-    padding: 10px;
+    padding: 20px;
 }
 
 .club a {
@@ -74,73 +135,6 @@ body {
     width: 100%;
     padding: 10px;
 }
-
-/* 列容器 */
-.searchbar {
-    display: -ms-flexbox; /* IE10 */
-    display: flex;
-    -ms-flex-wrap: wrap; /* IE10 */
-    flex-wrap: wrap;
-	background-color: #f1f1f1;
-	overflow: hidden;
-}
-
-/* 搜索 */
-.search {
-	-ms-flex: 30%; /* IE10 */
-    flex: 30%;
-    background-color: #f1f1f1;
-    padding: 10px;
-    display: flex;
-}
-	
-.searchTerm {
-  border: 3px solid #00B4CC;
-  height: 30px;
-  border-radius: 5px;
-  color: #9DBFAF;
-  outline: none;
-}
-
-.searchTerm:focus{
-  color: #00B4CC;
-}
-
-.searchButton {
-  width: 40px;
-  height: 36px;
-  border: 1px solid #00B4CC;
-  text-align: center;
-  color: #fff;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 20px;
-}
-	
-.searchbar t {
-    display: block;
-    color: black;
-	text-align: center;
-    font-size: 20px;
-	
-}	
-		
-
-.searchbar a {
-	padding: 3px 10px;
-	float: left;
-    display: block;
-    color: black;
-	text-align: center;
-    font-size: 20px;
-}	
-	
-.searchbar a.right {
-    float: right;
-	display: block;
-	color: white;
-	background-color: #1abc9c;
-}	
 	
 /* 响应式布局 - 在屏幕设备宽度尺寸小于 500px 时, 上下堆叠显示 */
 @media screen and (max-width: 500px) {
@@ -182,10 +176,8 @@ body {
       <i class="fa fa-search"></i>
      </button>
    </div>	
-	<div class="search">
-	  <a>not interested?</a>
-      <a href="#" class="right">form</a>	
-	</div>
+	  <h1>not interested?</h1>
+      <a href="#">form</a>	
 </div>
 
 
