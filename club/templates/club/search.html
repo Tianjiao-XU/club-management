@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>index</title>
+<title>search</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">	
 <style>
 * {
     box-sizing: border-box;
@@ -42,27 +43,6 @@ body {
     color: black;
 }
 
-/* banner */
-.banner {
-    padding: 80px;
-    text-align: center;
-    background: #1abc9c;
-    color: white;
-}
-
-/* banner按钮 */
-.banner a {
-    display: block;
-    color: white;
-    text-align: center;
-    font-size: 30px;
-    background-color:#b0c4de;
-}
-
-/* banner标题字体 */
-.banner h1 {
-    font-size: 40px;
-}
 
 /* 列容器 */
 .row {
@@ -72,13 +52,12 @@ body {
     flex-wrap: wrap;
 }
 
-/* 创建两个列 */
 /* 边栏 */
 .club {
     -ms-flex: 20%; /* IE10 */
     flex: 20%;
     background-color: #f1f1f1;
-    padding: 20px;
+    padding: 10px;
 }
 
 .club a {
@@ -96,6 +75,73 @@ body {
     padding: 10px;
 }
 
+/* 列容器 */
+.searchbar {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+	background-color: #f1f1f1;
+	overflow: hidden;
+}
+
+/* 搜索 */
+.search {
+	-ms-flex: 30%; /* IE10 */
+    flex: 30%;
+    background-color: #f1f1f1;
+    padding: 10px;
+    display: flex;
+}
+	
+.searchTerm {
+  border: 3px solid #00B4CC;
+  height: 30px;
+  border-radius: 5px;
+  color: #9DBFAF;
+  outline: none;
+}
+
+.searchTerm:focus{
+  color: #00B4CC;
+}
+
+.searchButton {
+  width: 40px;
+  height: 36px;
+  border: 1px solid #00B4CC;
+  text-align: center;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
+}
+	
+.searchbar t {
+    display: block;
+    color: black;
+	text-align: center;
+    font-size: 20px;
+	
+}	
+		
+
+.searchbar a {
+	padding: 3px 10px;
+	float: left;
+    display: block;
+    color: black;
+	text-align: center;
+    font-size: 20px;
+}	
+	
+.searchbar a.right {
+    float: right;
+	display: block;
+	color: white;
+	background-color: #1abc9c;
+}	
+	
 /* 响应式布局 - 在屏幕设备宽度尺寸小于 500px 时, 上下堆叠显示 */
 @media screen and (max-width: 500px) {
     .navbar a {
@@ -105,7 +151,12 @@ body {
 	    .row {
         flex-direction: column;
     }
+	    .searchbar {
+        flex-direction: column;
+    }	
 }
+
+}	
 </style>
 </head>
 <body>
@@ -117,12 +168,25 @@ body {
   <a href="#" class="right">myClub</a>
   <a href="#" class="right">clubs</a>
 </div>
-
-<div class="banner">
-  <h1>Club Management</h1>
-  <a href="#">Form Your Club Here</a>
+	
+<div class="searchbar">
+   <div class="search">
+      <input type="text" class="searchTerm" placeholder="city">
+      <button type="submit" class="searchTerm">
+      <i class="fa fa-search"></i>
+     </button>
+   </div>
+   <div class="search">
+      <input type="text" class="searchTerm" placeholder="type">
+      <button type="submit" class="searchTerm">
+      <i class="fa fa-search"></i>
+     </button>
+   </div>	
+	<div class="search">
+	  <a>not interested?</a>
+      <a href="#" class="right">form</a>	
+	</div>
 </div>
-
 
 
 <div class="row">
