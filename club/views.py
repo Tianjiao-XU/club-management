@@ -2,8 +2,9 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-
-from club.forms import UserForm, UserProfileForm
+from django.http import JsonResponse
+from club.models import Club
+from club.forms import UserForm, UserProfileForm, searchClubForm
 
 def index(request):
     return render(request, 'club/index.html')
@@ -106,3 +107,17 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'club/login.html')
+
+
+def search(request):
+    form = searchClubForm()
+    if request.method == 'POST':
+        print(form)
+        return index(request)
+    print(request.GET['location'])
+    a = request.GET['location']
+    results = Club.objects.filter(location=a)
+    data = [{'name': obj.name, 'type': obj.type, 'description': obj.description,'location':obj.location,'likes':obj.likes,'dislikes':obj.dislikes} for obj in results]
+    # return JsonResponse({'data': data})
+    print(data)
+    return render(request,'club/search.html')
