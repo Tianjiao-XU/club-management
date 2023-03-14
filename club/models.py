@@ -10,6 +10,9 @@ class Club(models.Model):
     dislikes = models.IntegerField(default=0)
     manager = models.ForeignKey('User', on_delete=models.SET_NULL,  null=True, blank=True, related_name='managed_clubs')
 
+    class Meta:
+        db_table = "Club"
+
     def __str__(self):
         return self.name
 
@@ -21,6 +24,9 @@ class User(models.Model):
     birthday = models.DateField(blank=True, null=True)
     club = models.ForeignKey(Club, on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
 
+    class Meta:
+        db_table = "User"
+
     def __str__(self):
         return self.email
 
@@ -30,6 +36,9 @@ class Approval(models.Model):
     club = models.ForeignKey(Club, on_delete=models.DO_NOTHING)
     completed = models.BooleanField(default=0)
 
+    class Meta:
+        db_table = "Approval"
+
     def __str__(self):
         return self.id
 
@@ -38,6 +47,9 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     club = models.ForeignKey(Club, on_delete=models.DO_NOTHING)
     detail = models.CharField(max_length=200)
+
+    class Meta:
+        db_table = "Comment"
 
     def __str__(self):
         return self.id
