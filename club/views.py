@@ -1,4 +1,7 @@
-from django.contrib.auth import authenticate, login
+from datetime import datetime
+
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -6,8 +9,19 @@ from django.urls import reverse
 from club.forms import UserForm, UserProfileForm
 
 def index(request):
-    return render(request, 'club/index.html')
+    # request.session.set_test_cookie()
+    context_dict = {}
 
+    visitor_cookie_handler(request)
+    context_dict['visits'] = request.session['visits']
+    response = render(request, 'club/index.html', context=context_dict)
+    return response
+
+def myClub(request):
+    # if request.session.test_cookie_worked():
+    #     print("TEST COOKIE WORKED!")
+    #     request.session.delete_test_cookie()
+    return render(request, 'club/myclub.html')
 
 def register(request):
 # A boolean value for telling the template
@@ -106,3 +120,50 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'club/login.html')
+
+# def logout(request):
+#     if not request.user.is_authenticated():
+#         return HttpResponse("You are logged in")
+#     else:
+#         return HttpResponse("You are not logged in")
+# Use the login_required() decorator to ensure only those logged in can
+# access the view.
+@login_required
+def user_logout(request):
+# Since we know the user is logged in, we can now just log them out.
+    logout(request)
+# Take the user back to the homepage.
+
+    return redirect(reverse('club:index'))
+
+def get_server_side_cookie(request, cookie, default_val=None):
+    val = request.session.get(cookie)
+    if not val:
+        val = default_val
+    return val
+
+
+# an example for deal with cookies(copy from book)
+def visitor_cookie_handler(request):
+    # Get the number of visits to the site.
+    # We use the COOKIES.get() function to obtain the visits cookie.
+    # If the cookie exists, the value returned is casted to an integer.
+    # If the cookie doesn't exist, then the default value of 1 is used.
+    visits = int(get_server_side_cookie(request, 'visits', '1'))
+    # last_visit_cookie = request.COOKIES.get('last_visit', str(datetime.now()))
+    last_visit_cookie = get_server_side_cookie(request,'last_visit',str(datetime.now()))
+    last_visit_time = datetime.strptime(last_visit_cookie[:-7],'%Y-%m-%d %H:%M:%S')
+    # If it's been more than a day since the last visit...
+    if (datetime.now() - last_visit_time).seconds > 0:
+        visits = visits + 1
+    # Update the last visit cookie now that we have updated the count
+    #     response.set_cookie('last_visit', str(datetime.now()))
+        request.session['last_visit'] = str(datetime.now())
+    else:
+    # Set the last visit cookie
+    #     response.set_cookie('last_visit', last_visit_cookie)
+        request.session['last_visit'] = last_visit_cookie
+
+    # Update/set the visits cookie
+    # response.set_cookie('visits', visits)
+    request.session['visits'] = visits
