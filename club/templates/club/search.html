@@ -154,10 +154,15 @@ body {
 	
 <div class="searchbar">
    <div class="search">
-      <input type="text" class="searchTerm" placeholder="city">
-      <button type="submit" class="searchTerm">
-      <i class="fa fa-search"></i>
-     </button>
+       <form method="get" action="/club/search">
+           {% csrf_token %}
+           <input type="text" class="searchTerm" placeholder="city" name="location">
+           <button type="submit" class="searchTerm">
+               <i class="fa fa-search"></i>
+           </button>
+       </form>
+
+
    </div>
    <div class="search">
       <input type="text" class="searchTerm" placeholder="type">
