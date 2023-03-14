@@ -8,10 +8,10 @@ Register
 {% block body_block %}
 <h1>Register for user</h1>
 {% if registered %}
-Rango says: <strong>thank you for registering!</strong>
+Club says: <strong>thank you for registering!</strong>
 <a href="{% url 'club:index' %}">Return to the homepage.</a><br />
 {% else %}
-Rango says: <strong>register here!</strong><br />
+Club: <strong>register here!</strong><br />
 <form id="user_form" method="post" action="{% url 'club:register' %}"
 enctype="multipart/form-data">
 
