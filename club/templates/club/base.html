@@ -9,9 +9,24 @@
             How to Tango with Django!
         {% endblock %}
     </title>
+<link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
 </head>
 
 <body>
+
+<div class="navbar">
+    <a href="{% url 'club:index' %}">home</a>
+    {% if user.is_authenticated %}
+        <a href="{% url 'club:logout' %}" class="right">Logout</a>
+    {% else %}
+        <a href="{% url 'club:login' %}" class="right">login</a>
+    {% endif %}
+    <a href="#" class="right">contact</a>
+    <a href="#" class="right">clubs</a>
+    <a href="{% url 'club:myclub' %}" class="right">myClub</a>
+
+
+</div>
 <div>
     {% block body_block %}
     {% endblock %}
