@@ -23,7 +23,8 @@ def myClub(request):
     #     print("TEST COOKIE WORKED!")
     #     request.session.delete_test_cookie()
     return render(request, 'club/myclub.html')
-
+def contact(request):
+    return render(request, 'club/contact.html')
 def register(request):
 # A boolean value for telling the template
 # whether the registration was successful.

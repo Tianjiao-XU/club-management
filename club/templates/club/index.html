@@ -118,8 +118,8 @@ body {
     {% else %}
         <a href="{% url 'club:login' %}" class="right">login</a>
     {% endif %}
-    <a href="#" class="right">contact</a>
-    <a href="#" class="right">clubs</a>
+    <a href="{% url 'club:contact' %}" class="right">contact</a>
+    <a href="{% url 'club:search' %}" class="right">search</a>
     <a href="{% url 'club:myclub' %}" class="right">myClub</a>
 
 </div>
