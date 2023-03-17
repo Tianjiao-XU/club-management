@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load staticfiles %}
 <html>
 
 <head>
@@ -9,11 +10,14 @@
             How to Tango with Django!
         {% endblock %}
     </title>
-<link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/base.css' %}">
+	{% block header_block %}
+	{% endblock %}
 </head>
 
 <body>
-
 <div class="navbar">
     <a href="{% url 'club:index' %}">home</a>
     {% if user.is_authenticated %}
@@ -24,8 +28,6 @@
     <a href="{% url 'club:contact' %}" class="right">contact</a>
     <a href="{% url 'club:search' %}" class="right">search</a>
     <a href="{% url 'club:myclub' %}" class="right">myClub</a>
-
-
 </div>
 <div>
     {% block body_block %}
