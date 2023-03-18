@@ -8,7 +8,7 @@ class Club(models.Model):
     description = models.CharField(max_length=200)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
-    manager = models.ForeignKey('User', on_delete=models.SET_NULL,  null=True, blank=True, related_name='managed_clubs')
+    manager = models.ForeignKey('UserProfile', on_delete=models.SET_NULL,  null=True, blank=True, related_name='managed_clubs')
 
     class Meta:
         db_table = "Club"
@@ -54,11 +54,13 @@ class Comment(models.Model):
     def __str__(self):
         return self.id
 
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # The additional attributes we wish to include.
     website = models.URLField(blank=True)
-
     picture = models.ImageField(upload_to='profile_images', blank=True)
+    birthday = models.DateField(blank=True, null=True)
+    club = models.ForeignKey(Club, on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
     def __str__(self):
         return self.user.username
