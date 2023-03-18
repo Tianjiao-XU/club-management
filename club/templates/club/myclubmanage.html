@@ -10,12 +10,7 @@
 
 
 {% block sidebar_block %}
-    <p>
-        <a class="btn" href="#">Join »</a>
-        <a class="btn" href="{% url 'club:myclubevaluate' %}" >Evaluate »</a>
-        <a class="btn" href="{% url 'club:myclubmanage' %}" >Manage »</a>
-    </p>
-    <h1>Members</h1>
+    <h1>Approval</h1>
     <div class="jumbotron">
         <div class="row clearfix">
             <div class="col-md-1 column">
@@ -30,12 +25,14 @@
                     condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
                     euismod. Donec sed odio dui.
                 </p>
+                <button type="submit" class="btn btn-primary btn-large">approve</button>
+                <button type="submit" class="btn btn-primary btn-large">reject</button>
             </div>
             <div class="col-md-3 column">
                 <img src="/static/images/sports.jpg" class="img-circle img-responsive" alt="Responsive image"/>
             </div>
         </div>
-        <hr />
+        <hr/>
         <div class="row clearfix">
             <div class="col-md-1 column">
             </div>
@@ -49,6 +46,8 @@
                     condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
                     euismod. Donec sed odio dui.
                 </p>
+                <button type="submit" class="btn btn-primary btn-large">approve</button>
+                <button type="submit" class="btn btn-primary btn-large">reject</button>
             </div>
             <div class="col-md-3 column">
                 <img src="/static/images/sports.jpg" class="img-circle img-responsive" alt="Responsive image"/>

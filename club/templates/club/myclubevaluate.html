@@ -1,0 +1,25 @@
+{% extends 'club/myclub_base.html' %}
+{% load static %}
+{% load staticfiles %}
+{% block title_block %}
+    My club
+{% endblock %}
+
+{% block header_block %}
+{% endblock %}
+
+
+{% block sidebar_block %}
+    <h1>Evaluate your club</h1>
+    <div class="jumbotron">
+        <div class="rate-content">
+            <input type="radio" id="like" name="evaluate" value="like">
+            <label for="like">like</label>
+            <input type="radio" id="dislike" name="evaluate" value="dislike">
+            <label for="dislike">dislike</label>
+            <div>
+                <button type="submit" class="btn btn-primary btn-large" href="{% url 'club:myclub' %}">submit</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
