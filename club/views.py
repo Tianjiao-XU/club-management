@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
 from club.models import User, Club, Approval, Comment
-from club.forms import UserForm, UserProfileForm, searchClubForm
+from club.forms import UserForm, searchClubForm
 import json
 
 
@@ -49,10 +49,9 @@ def register(request):
 # Attempt to grab information from the raw form information.
 # Note that we make use of both UserForm and UserProfileForm.
         user_form = UserForm(request.POST)
-        profile_form = UserProfileForm(request.POST)
 
 # If the two forms are valid...
-        if user_form.is_valid() and profile_form.is_valid():
+        if user_form.is_valid():
         # Save the user's form data to the database.
             user = user_form.save()
          # Now we hash the password with the set_password method.
@@ -60,41 +59,23 @@ def register(request):
             user.set_password(user.password)
             user.save()
 
-# Now sort out the UserProfile instance.
-# Since we need to set the user attribute ourselves,
-# we set commit=False. This delays saving the model
-# until we're ready to avoid integrity problems.
-            profile = profile_form.save(commit=False)
-            profile.user = user
-
-# Did the user provide a profile picture?
-# If so, we need to get it from the input form and
-#put it in the UserProfile model.
-            if 'picture' in request.FILES:
-                profile.picture = request.FILES['picture']
-
-            # Now we save the UserProfile model instance.
-            profile.save()
-
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
         else:
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
-            print(user_form.errors, profile_form.errors)
+            print(user_form.errors)
     else:
         # Not a HTTP POST, so we render our form using two ModelForm instances.
         # These forms will be blank, ready for user input.
         user_form = UserForm()
-        profile_form = UserProfileForm()
 
     # Render the template depending on the context.
     return render(request,
                 'club/register.html',
-                context = {'user_form': user_form,
-                            'profile_form': profile_form,
-                            'registered': registered})
+                context = {'user_form': user_form, 'registered': registered})
+
 
 def user_login(request):
     # If the request is a HTTP POST, try to pull out the relevant information.
@@ -106,11 +87,11 @@ def user_login(request):
     # request.POST.get('<variable>') returns None if the
     # value does not exist, while request.POST['<variable>']
     # will raise a KeyError exception.
-        username = request.POST.get('username')
+        email = request.POST.get('email')
         password = request.POST.get('password')
     # Use Django's machinery to attempt to see if the username/password
     # combination is valid - a User object is returned if it is.
-        user = authenticate(username=username, password=password)
+        user = authenticate(email=email, password=password)
     # If we have a User object, the details are correct.
     # If None (Python's way of representing the absence of a value), no user
     # with matching credentials was found.
@@ -233,6 +214,7 @@ def viewClub(request):
             message = "User_id is invalid!"
             return general_response(400, message)
         club = Club.objects.get(id=club_id)
+
         if not club:
             message = "CLube name has already been used"
             return general_response(400, message)

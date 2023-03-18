@@ -8,8 +8,8 @@
     <h1>Login to user</h1>
     <form id="login_form" method="post" action="{% url 'club:login' %}">
         {% csrf_token %}
-        <h3>User name</h3>
-        <input type="text" name="username" value="username" size="50"/>
+        <h3>Email</h3>
+        <input type="text" name="email" value="email" size="50"/>
         <br/>
         <h3>Password</h3>
         <input type="password" name="password" value="password" size="50"/>
