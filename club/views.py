@@ -23,6 +23,10 @@ def myClub(request):
     #     print("TEST COOKIE WORKED!")
     #     request.session.delete_test_cookie()
     return render(request, 'club/myclub.html')
+def myclubevaluate(request):
+    return render(request, 'club/myclubevaluate.html')
+def myclubmanage(request):
+    return render(request, 'club/myclubmanage.html')
 def contact(request):
     return render(request, 'club/contact.html')
 def register(request):
@@ -125,17 +129,17 @@ def user_login(request):
 
 
 def search(request):
-    form = searchClubForm()
-    if request.method == 'POST':
-        print(form)
-        return index(request)
-    print(request.GET['location'])
-    a = request.GET['location']
-    results = Club.objects.filter(location=a)
-    data = [{'name': obj.name, 'type': obj.type, 'description': obj.description,'location':obj.location,'likes':obj.likes,'dislikes':obj.dislikes} for obj in results]
-    # return JsonResponse({'data': data})
-    print(data)
-    return render(request,'club/search.html')
+    #form = searchClubForm()
+    #if request.method == 'POST':
+        #print(form)
+             #return index(request)
+    #print(request.GET['location'])
+    #a = request.GET['location']
+    #results = Club.objects.filter(location=a)
+    #data = [{'name': obj.name, 'type': obj.type, 'description': obj.description,'location':obj.location,'likes':obj.likes,'dislikes':obj.dislikes} for obj in results]
+    #return JsonResponse({'data': data})
+    #print(data)
+    return render(request, 'club/search.html')
 
 
 # def logout(request):

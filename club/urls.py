@@ -12,4 +12,6 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('logout/',views.user_logout, name='logout'),
     path('contact/', views.contact, name='contact'),
+    path('myclubevaluate/', views.myclubevaluate, name='myclubevaluate'),
+    path('myclubmanage/', views.myclubmanage, name='myclubmanage'),
 ]
