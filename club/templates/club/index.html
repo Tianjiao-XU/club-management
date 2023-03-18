@@ -2,47 +2,69 @@
 {% load static %}
 {% load staticfiles %}
 {% block title_block %}
-Index
+    Index
 {% endblock %}
 
 {% block header_block %}
-<link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 {% block body_block %}
-    <div class="banner">
-    <h1>Club Management</h1>
-</div>
+    <div class="jumbotron">
+        <h1>
+            Hello, world!
+        </h1>
+        <p>
+            This is a template for a simple marketing or informational website. It includes a large callout
+            called the hero unit and three supporting pieces of content. Use it as a starting point to
+            create something more unique.
+        </p>
+        <p>
+            <a class="btn btn-primary btn-large" href="{% url 'club:search' %}">Search a club »</a>
+        </p>
+    </div>
 {% endblock %}
 
 {% block sidebar_block %}
-    <div class="row">
-        <div class="club">
-        <h2>club1</h2>
-        <div class="fakeimg" style="height:200px;">image</div>
-	    <h3>star：</h3>
-        <p>type</p>
-        <p>city</p>
-        <p>description</p>
-        <a href="#" class="right">join</a>
+    <div class="col-md-4 column">
+        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
+        <h2>
+            Club1
+        </h2>
+        <p>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+            malesuada magna mollis euismod. Donec sed odio dui.
+        </p>
+        <p>
+            <a class="btn" href="#">View details »</a>
+        </p>
     </div>
-    <div class="club">
-        <h2>club1</h2>
-        <div class="fakeimg" style="height:200px;">image</div>
-	    <h3>star：</h3>
-        <p>type</p>
-        <p>city</p>
-        <p>description</p>
-        <a href="#" class="right">join</a>
+    <div class="col-md-4 column">
+        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
+        <h2>
+            Club2
+        </h2>
+        <p>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+            malesuada magna mollis euismod. Donec sed odio dui.
+        </p>
+        <p>
+            <a class="btn" href="#">View details »</a>
+        </p>
     </div>
-    <div class="club">
-        <h2>club1</h2>
-        <div class="fakeimg" style="height:200px;">image</div>
-	    <h3>star：</h3>
-        <p>type</p>
-        <p>city</p>
-        <p>description</p>
-        <a href="#" class="right">join</a>
+    <div class="col-md-4 column">
+        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
+        <h2>
+            Club3
+        </h2>
+        <p>
+            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
+            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
+            malesuada magna mollis euismod. Donec sed odio dui.
+        </p>
+        <p>
+            <a class="btn" href="#">View details »</a>
+        </p>
     </div>
-</div>
 {% endblock %}
