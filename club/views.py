@@ -29,6 +29,8 @@ def myclubmanage(request):
     return render(request, 'club/myclubmanage.html')
 def contact(request):
     return render(request, 'club/contact.html')
+def form(request):
+    return render(request, 'club/form.html')
 def register(request):
 # A boolean value for telling the template
 # whether the registration was successful.

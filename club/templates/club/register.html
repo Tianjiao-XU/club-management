@@ -6,22 +6,24 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Register for user</h1>
-    {% if registered %}
-        Club says: <strong>thank you for registering!</strong>
-        <a href="{% url 'club:index' %}">Return to the homepage.</a><br/>
-    {% else %}
-        Club: <strong>register here!</strong><br/>
-        <form id="user_form" method="post" action="{% url 'club:register' %}"
-              enctype="multipart/form-data">
+    <div class="jumbotron">
+        <h1>Register for user</h1>
+        {% if registered %}
+            Club says: <strong>thank you for registering!</strong>
+            <a href="{% url 'club:index' %}">Return to the homepage.</a><br/>
+        {% else %}
+            Club: <strong>register here!</strong><br/>
+            <form id="user_form" method="post" action="{% url 'club:register' %}"
+                  enctype="multipart/form-data">
 
-            {% csrf_token %}
-            <!-- Display each form -->
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
+                {% csrf_token %}
+                <!-- Display each form -->
+                {{ user_form.as_p }}
+                {{ profile_form.as_p }}
 
-            <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Register"/>
-        </form>
-    {% endif %}
+                <!-- Provide a button to click to submit the form. -->
+                <input type="submit" name="submit" value="Register"/>
+            </form>
+        {% endif %}
+    </div>
 {% endblock %}
