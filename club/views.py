@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -112,6 +112,7 @@ def user_login(request):
     # If the account is valid and active, we can log the user in.
     # We'll send the user back to the homepage.
                 login(request, user)
+                request.session['email'] = email
                 return redirect(reverse('club:index'))
             else:
     # An inactive account was used - no logging in!
