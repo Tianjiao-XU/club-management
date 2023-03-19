@@ -10,10 +10,10 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password', 'birthday')
 
 
-class searchClubForm(forms.ModelForm):
-    location = forms.CharField()
-    # type = forms.CharField()
-
-    class Meta:
-        model = Club
-        exclude = ()
+# class searchClubForm(forms.ModelForm):
+#     location = forms.CharField(max_length=100)
+#     # type = forms.CharField()
+#
+#     class Meta:
+#         model = Club
+#         fields = ('name','description','type','location','likes','dislikes')

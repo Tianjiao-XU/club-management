@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
 from club.models import User, Club, Approval, Comment
-from club.forms import UserForm, searchClubForm
+from club.forms import UserForm
 import json
 
 
@@ -18,11 +18,11 @@ def general_response(code, message="", data=[]):
 
 def index(request):
     # request.session.set_test_cookie()
-    context_dict = {}
-
-    visitor_cookie_handler(request)
-    context_dict['visits'] = request.session['visits']
-    response = render(request, 'club/index.html', context=context_dict)
+    # visitor_cookie_handler(request)
+    # context_dict['visits'] = request.session['visits']
+    club_list  = Club.objects.order_by('-likes')[:3]
+    context_dict = {'club_list':club_list}
+    response = render(request, 'club/index.html', context_dict)
     return response
 
 
@@ -130,17 +130,20 @@ def user_login(request):
 
 
 def search(request):
-    #form = searchClubForm()
-    #if request.method == 'POST':
-        #print(form)
-             #return index(request)
-    #print(request.GET['location'])
-    #a = request.GET['location']
-    #results = Club.objects.filter(location=a)
-    #data = [{'name': obj.name, 'type': obj.type, 'description': obj.description,'location':obj.location,'likes':obj.likes,'dislikes':obj.dislikes} for obj in results]
-    #return JsonResponse({'data': data})
-    #print(data)
+    if request.method == 'POST':
+        if request.POST.get('type'):
+            print(request.POST['type'])
+            a = request.POST['type']
+            results = Club.objects.filter(type=a)
+        else:
+            print(request.POST['location'])
+            a = request.POST['location']
+            results = Club.objects.filter(location=a)
+        clubs = [{'name': obj.name, 'type': obj.type, 'description': obj.description,'location':obj.location,'likes':obj.likes,'dislikes':obj.dislikes} for obj in results]
+        print(clubs)
+        return render(request,'club/search.html', {"clubs":clubs})
     return render(request, 'club/search.html')
+
 
 
 # def logout(request):

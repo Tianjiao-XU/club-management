@@ -24,46 +24,46 @@
 {% endblock %}
 
 {% block sidebar_block %}
-    <div class="col-md-4 column">
-        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
-        <h2>
-            Club1
-        </h2>
-        <p>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-            malesuada magna mollis euismod. Donec sed odio dui.
-        </p>
-        <p>
-            <a class="btn" href="#">View details »</a>
-        </p>
-    </div>
-    <div class="col-md-4 column">
-        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
-        <h2>
-            Club2
-        </h2>
-        <p>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-            malesuada magna mollis euismod. Donec sed odio dui.
-        </p>
-        <p>
-            <a class="btn" href="#">View details »</a>
-        </p>
-    </div>
-    <div class="col-md-4 column">
-        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
-        <h2>
-            Club3
-        </h2>
-        <p>
-            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,
-            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem
-            malesuada magna mollis euismod. Donec sed odio dui.
-        </p>
-        <p>
-            <a class="btn" href="#">View details »</a>
-        </p>
-    </div>
+    {% for club in club_list %}
+        <div class="col-md-4 column">
+            <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <h2>
+                {{club.name}}
+            </h2>
+            <p>
+                {{club.description}}
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+    {% endfor %}
+<!--    <div class="col-md-4 column">-->
+<!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
+<!--        <h2>-->
+<!--            Club2-->
+<!--        </h2>-->
+<!--        <p>-->
+<!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
+<!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
+<!--            malesuada magna mollis euismod. Donec sed odio dui.-->
+<!--        </p>-->
+<!--        <p>-->
+<!--            <a class="btn" href="#">View details »</a>-->
+<!--        </p>-->
+<!--    </div>-->
+<!--    <div class="col-md-4 column">-->
+<!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
+<!--        <h2>-->
+<!--            Club3-->
+<!--        </h2>-->
+<!--        <p>-->
+<!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
+<!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
+<!--            malesuada magna mollis euismod. Donec sed odio dui.-->
+<!--        </p>-->
+<!--        <p>-->
+<!--            <a class="btn" href="#">View details »</a>-->
+<!--        </p>-->
+<!--    </div>-->
 {% endblock %}
