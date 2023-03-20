@@ -93,15 +93,11 @@ def user_login(request):
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
         if login_form.is_valid():
+            user = login_form.cleaned_data['user']
             email = login_form.cleaned_data['email']
-            password = login_form.cleaned_data['password']
-            user = authenticate(request, email=email, password=password)
-            if user:
-                login(request, user)
-                request.session['email'] = email
-                return redirect(reverse('club:index'))
-            else:
-                messages.error(request, 'Email or password is not correct!')
+            login(request, user)
+            request.session['email'] = email
+            return redirect(reverse('club:index'))
     else:
         login_form = LoginForm()
     return render(request, 'club/login.html', {'login_form': login_form})

@@ -8,13 +8,6 @@
 {% block body_block %}
     <div class="jumbotron">
     <h1>Create a club</h1>
-    {% if messages %}
-        <ul class="alert-danger">
-        {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-        </ul>
-    {% endif %}
     <form id="club_form" method="post" action="/club/create_club/">
         {% csrf_token %}
         <fieldset>
@@ -45,8 +38,7 @@
               </div>
             {% endif %}
             {{ club_form.as_div }}
-
-            <div><button type="submit" class="btn btn-primary">Create</button></div>
+            <button type="submit" class="btn btn-primary">Create</button>
         </fieldset>
     </form>
     </div>

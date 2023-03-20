@@ -1,9 +1,10 @@
 from club.models import User, Club
 from django import forms
+from django.contrib.auth import authenticate
 
 
 class RegisterForm(forms.ModelForm):
-    password = forms.CharField(widget=forms.PasswordInput(),help_text="Please enter the password.")
+    password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter the password.")
 
     class Meta:
         model = User
@@ -12,7 +13,17 @@ class RegisterForm(forms.ModelForm):
 
 class LoginForm(forms.ModelForm):
     email = forms.EmailField(help_text="Please enter the email.")
-    password = forms.CharField(widget=forms.PasswordInput(),help_text="Please enter the password.")
+    password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter the password.")
+
+    def clean(self):
+        email = self.cleaned_data["email"]
+        password = self.cleaned_data["password"]
+        user = authenticate(email=email, password=password)
+        if user is None:
+            raise forms.ValidationError('Email or password is not correct！')
+        else:
+            self.cleaned_data['user'] = user
+        return self.cleaned_data
 
     class Meta:
         model = User
