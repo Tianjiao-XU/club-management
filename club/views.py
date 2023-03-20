@@ -33,20 +33,20 @@ def myClub(request):
     #     request.session.delete_test_cookie()
     user_email = request.session.get('email')
     user = User.objects.get(email=user_email)
+    club = user.club
     member_list = User.objects.filter(club=user.club)
-    return render(request, 'club/myclub.html',{"member_list":member_list})
+    return render(request, 'club/myclub.html',{"member_list":member_list,"club":club})
 
 def myclubevaluate(request):
+    club = User.objects.get(email=request.session.get('email')).club
     if request.method == 'POST':
-        print(request.session.get('email'))
-        club = User.objects.get(email=request.session.get('email')).club
         if request.POST.get('evaluate') == 'like':
             club.likes += 1
         else:
             club.dislikes += 1
         club.save()
 
-    return render(request, 'club/myclubevaluate.html')
+    return render(request, 'club/myclubevaluate.html',{"club":club})
 
 
 def myclubmanage(request):
@@ -70,7 +70,7 @@ def myclubmanage(request):
             print("你不是管理员")
     approval_list = Approval.objects.filter(club=user.club)
 
-    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list})
+    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":user.club})
 
 
 def contact(request):
