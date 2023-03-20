@@ -5,37 +5,52 @@
 {% endblock %}
 
 {% block header_block %}
+    <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
     <script src="http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-	<script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 {% endblock %}
 
 {% block body_block %}
-</div>
-    <div class="jumbotron">
-    <div id="myCarousel" class="carousel slide">
-    <!-- 轮播（Carousel）指标 -->
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <!-- 轮播（Carousel）项目 -->
-    <div class="carousel-inner">
-        <div class="item active">
-            <img decoding="async" src="/static/images/slides/slide1.jpeg" class="img-responsive center-block" alt="First slide">
+    <div class="row clearfix">
+        <div class="col-md-2 column">
         </div>
-        <div class="item">
-            <img decoding="async" src="/static/images/slides/slide2.jpeg" class="img-responsive center-block" alt="Second slide">
+        <div class="col-md-8 column">
+            <div class="jumbotron-fluid">
+                <div id="myCarousel" class="carousel slide">
+                    <!-- Carousel details -->
+                    <ol class="carousel-indicators">
+                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                        <li data-target="#myCarousel" data-slide-to="1"></li>
+                        <li data-target="#myCarousel" data-slide-to="2"></li>
+                    </ol>
+                    <!-- Carousel pictures -->
+                    <div class="carousel-inner">
+                        <div class="item active">
+                            <img decoding="async" src="/static/images/slides/slide1.jpg"
+                                 class="img-responsive center-block"
+                                 alt="First slide">
+                        </div>
+                        <div class="item">
+                            <img decoding="async" src="/static/images/slides/slide2.jpg"
+                                 class="img-responsive center-block"
+                                 alt="Second slide">
+                        </div>
+                        <div class="item">
+                            <img decoding="async" src="/static/images/slides/slide3.jpg"
+                                 class="img-responsive center-block"
+                                 alt="Third slide">
+                        </div>
+                    </div>
+                    <!-- Carousel navbar -->
+                    <a class="carousel-control left" href="#myCarousel"
+                       data-slide="prev"> <span _ngcontent-c3="" aria-hidden="true"
+                                                class="glyphicon glyphicon-chevron-left"></span></a>
+                    <a class="carousel-control right" href="#myCarousel"
+                       data-slide="next"><span _ngcontent-c3="" aria-hidden="true"
+                                               class="glyphicon glyphicon-chevron-right"></span></a>
+                </div>
+            </div>
         </div>
-        <div class="item">
-            <img decoding="async" src="/static/images/slides/slide3.jpeg" class="img-responsive center-block" alt="Third slide">
-        </div>
-    </div>
-    <!-- 轮播（Carousel）导航 -->
-    <a class="carousel-control left" href="#myCarousel"
-       data-slide="prev"> <span _ngcontent-c3="" aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span></a>
-    <a class="carousel-control right" href="#myCarousel"
-       data-slide="next"><span _ngcontent-c3="" aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span></a>
     </div>
 {% endblock %}
 
@@ -44,42 +59,42 @@
         <div class="col-md-4 column">
             <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
             <h2>
-                {{club.name}}
+                {{ club.name }}
             </h2>
             <p>
-                {{club.description}}
+                {{ club.description }}
             </p>
             <p>
                 <a class="btn" href="#">View details »</a>
             </p>
         </div>
     {% endfor %}
-<!--    <div class="col-md-4 column">-->
-<!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
-<!--        <h2>-->
-<!--            Club2-->
-<!--        </h2>-->
-<!--        <p>-->
-<!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
-<!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
-<!--            malesuada magna mollis euismod. Donec sed odio dui.-->
-<!--        </p>-->
-<!--        <p>-->
-<!--            <a class="btn" href="#">View details »</a>-->
-<!--        </p>-->
-<!--    </div>-->
-<!--    <div class="col-md-4 column">-->
-<!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
-<!--        <h2>-->
-<!--            Club3-->
-<!--        </h2>-->
-<!--        <p>-->
-<!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
-<!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
-<!--            malesuada magna mollis euismod. Donec sed odio dui.-->
-<!--        </p>-->
-<!--        <p>-->
-<!--            <a class="btn" href="#">View details »</a>-->
-<!--        </p>-->
-<!--    </div>-->
+    <!--    <div class="col-md-4 column">-->
+    <!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
+    <!--        <h2>-->
+    <!--            Club2-->
+    <!--        </h2>-->
+    <!--        <p>-->
+    <!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
+    <!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
+    <!--            malesuada magna mollis euismod. Donec sed odio dui.-->
+    <!--        </p>-->
+    <!--        <p>-->
+    <!--            <a class="btn" href="#">View details »</a>-->
+    <!--        </p>-->
+    <!--    </div>-->
+    <!--    <div class="col-md-4 column">-->
+    <!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
+    <!--        <h2>-->
+    <!--            Club3-->
+    <!--        </h2>-->
+    <!--        <p>-->
+    <!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
+    <!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
+    <!--            malesuada magna mollis euismod. Donec sed odio dui.-->
+    <!--        </p>-->
+    <!--        <p>-->
+    <!--            <a class="btn" href="#">View details »</a>-->
+    <!--        </p>-->
+    <!--    </div>-->
 {% endblock %}
