@@ -5,7 +5,7 @@
     <title>
         Club -
         {% block title_block %}
-            How to Tango with Django!
+            Club Management System
         {% endblock %}
     </title>
     <meta charset="UTF-8">
@@ -25,7 +25,7 @@
         <a href="{% url 'club:login' %}" class="right h1">login</a>
     {% endif %}
     <a href="{% url 'club:contact' %}" class="right h1">contact</a>
-    <a href="{% url 'club:form' %}" class="right h1">form</a>
+    <a href="{% url 'club:create_club' %}" class="right h1">create</a>
     <a href="{% url 'club:search' %}" class="right h1">search</a>
     <a href="{% url 'club:myclub' %}" class="right h1">myClub</a>
 </div>

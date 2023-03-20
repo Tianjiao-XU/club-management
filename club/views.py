@@ -1,4 +1,5 @@
 from datetime import datetime
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -7,7 +8,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
 from club.models import User, Club, Approval, Comment
-from club.forms import UserForm
+from club.forms import RegisterForm, LoginForm, CreateClubForm
 import json
 
 
@@ -44,10 +45,6 @@ def contact(request):
     return render(request, 'club/contact.html')
 
 
-def form(request):
-    return render(request, 'club/form.html')
-
-
 def register(request):
 # A boolean value for telling the template
 # whether the registration was successful.
@@ -59,12 +56,12 @@ def register(request):
     if request.method == 'POST':
 # Attempt to grab information from the raw form information.
 # Note that we make use of both UserForm and UserProfileForm.
-        user_form = UserForm(request.POST)
+        register_form = RegisterForm(request.POST)
 
 # If the two forms are valid...
-        if user_form.is_valid():
+        if register_form.is_valid():
         # Save the user's form data to the database.
-            user = user_form.save()
+            user = register_form.save()
          # Now we hash the password with the set_password method.
          # Once hashed, we can update the user object.
             user.set_password(user.password)
@@ -76,57 +73,38 @@ def register(request):
         else:
             # Invalid form or forms - mistakes or something else?
             # Print problems to the terminal.
-            print(user_form.errors)
+            print(register_form.errors)
     else:
         # Not a HTTP POST, so we render our form using two ModelForm instances.
         # These forms will be blank, ready for user input.
-        user_form = UserForm()
+        register_form = RegisterForm()
 
     # Render the template depending on the context.
     return render(request,
                 'club/register.html',
-                context = {'user_form': user_form, 'registered': registered})
+                context = {'register_form': register_form, 'registered': registered})
 
 
 def user_login(request):
+    if request.user.is_authenticated:
+        return redirect('/club/')
+
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
-    # Gather the username and password provided by the user.
-    # This information is obtained from the login form.
-    # We use request.POST.get('<variable>') as opposed
-    # to request.POST['<variable>'], because the
-    # request.POST.get('<variable>') returns None if the
-    # value does not exist, while request.POST['<variable>']
-    # will raise a KeyError exception.
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-    # Use Django's machinery to attempt to see if the username/password
-    # combination is valid - a User object is returned if it is.
-        user = authenticate(email=email, password=password)
-    # If we have a User object, the details are correct.
-    # If None (Python's way of representing the absence of a value), no user
-    # with matching credentials was found.
-        if user:
-    # Is the account active? It could have been disabled.
-            if user.is_active:
-    # If the account is valid and active, we can log the user in.
-    # We'll send the user back to the homepage.
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            email = login_form.cleaned_data['email']
+            password = login_form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+            if user:
                 login(request, user)
                 request.session['email'] = email
                 return redirect(reverse('club:index'))
             else:
-    # An inactive account was used - no logging in!
-                return HttpResponse("Your club account is disabled.")
-        else:
-    # Bad login details were provided. So we can't log the user in.
-            print(f"Invalid login details: {email}, {password}")
-            return HttpResponse("Invalid login details supplied.")
-    # The request is not a HTTP POST, so display the login form.
-    # This scenario would most likely be a HTTP GET.
+                messages.error(request, 'Email or password is not correct!')
     else:
-        # No context variables to pass to the template system, hence the
-        # blank dictionary object...
-        return render(request, 'club/login.html')
+        login_form = LoginForm()
+    return render(request, 'club/login.html', {'login_form': login_form})
 
 
 def search(request):
@@ -195,45 +173,36 @@ def visitor_cookie_handler(request):
     request.session['visits'] = visits
 
 
+@login_required(login_url='/club/login')
 def createClub(request):
-    if request.method == "POST":
-        user_id = request.session.get('user_id')
-        name = request.POST.get("name")
-        type = request.POST.get("type")
-        location = request.POST.get("location")
-        description = request.POST.get("description")
-
-        if not user_id:
-            message = "User is not logged in!"
-            return general_response(400, message)
-        if not User.objects.get(id=user_id):
-            message = "User_id is invalid!"
-            return general_response(400, message)
-        if Club.objects.get(name=name):
-            message = "CLube name has already been used"
-            return general_response(400, message)
-
-        club = Club(name=name, type=type, location=location, description=description, manager=user_id)
-        club.save()
-        return render(request, 'club/index.html', locals())
-
-
-def viewClub(request):
-    if request.method == "POST":
-        user_id = request.session.get('user_id')
-        club_id = request.POST.get("club_id")
-        if not user_id:
-            message = "User is not logged in!"
-            return general_response(400, message)
-        if not User.objects.get(id=user_id):
-            message = "User_id is invalid!"
-            return general_response(400, message)
-        club = Club.objects.get(id=club_id)
-
-        if not club:
-            message = "CLube name has already been used"
-            return general_response(400, message)
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            club_form = CreateClubForm(request.POST)
+            if club_form.is_valid():
+                club_form.save(commit=True)
+                return redirect('/club/')
         else:
-            data = {"name": club["name"], "type": club["type"], "location": club["location"],
-                    "description": club["description"], "likes": club["likes"], "dislikes": club["dislikes"]}
-        return render(request, 'club/myclub.html', locals())
+            club_form = CreateClubForm()
+        return render(request, 'club/create_club.html', {'club_form': club_form})
+    else:
+        messages.error(request, 'Please log in first!')
+        return redirect('/club/login')
+
+
+@login_required(login_url='/club/login')
+def viewClub(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            club_id = request.POST.get("club_id")
+            club = Club.objects.get(id=club_id)
+
+            if not club:
+                message = "CLube name has already been used"
+                return general_response(400, message)
+            else:
+                data = {"name": club["name"], "type": club["type"], "location": club["location"],
+                        "description": club["description"], "likes": club["likes"], "dislikes": club["dislikes"]}
+            return render(request, 'club/myclub.html', locals())
+    else:
+        messages.error(request, 'Please log in first!')
+        return redirect('/club/login')
