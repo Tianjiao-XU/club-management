@@ -8,15 +8,14 @@
     </script>
     <script>
         $(document).ready(function () {
-            $("button").click(function () {
-                $("#div1").fadeToggle("slow");
+            $("img").click(function () {
+                $("#div1").fadeOut("slow");
             });
         });
     </script>
 {% endblock %}
 {% block body_block %}
     <div class="jumbotron">
-        <button>show/hide all images</button>
         <div id="div1">
             <img src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
         </div>
