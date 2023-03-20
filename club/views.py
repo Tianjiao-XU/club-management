@@ -18,7 +18,7 @@ def general_response(code, message="", data=[]):
 
 
 def index(request):
-    # request.session.set_test_cookie()
+    #request.session.set_test_cookie()
     # visitor_cookie_handler(request)
     # context_dict['visits'] = request.session['visits']
     club_list  = Club.objects.order_by('-likes')[:3]
@@ -28,9 +28,9 @@ def index(request):
 
 
 def myClub(request):
-    # if request.session.test_cookie_worked():
-    #     print("TEST COOKIE WORKED!")
-    #     request.session.delete_test_cookie()
+    #if request.session.test_cookie_worked():
+        #print("TEST COOKIE WORKED!")
+    #request.session.delete_test_cookie()
     user_email = request.session.get('email')
     user = User.objects.get(email=user_email)
     member_list = User.objects.filter(club=user.club)
@@ -66,8 +66,8 @@ def myclubmanage(request):
             approval_list = Approval.objects.filter(club=user.club)
             return render(request, 'club/myclubmanage.html',{"approval_list":approval_list})
         else:
-            messages.error(request, '你不是管理员我的bro')
-            print("你不是管理员")
+            messages.error(request, 'you are not my manager')
+            print("you are not my manager")
     approval_list = Approval.objects.filter(club=user.club)
 
     return render(request, 'club/myclubmanage.html',{"approval_list":approval_list})
@@ -234,3 +234,6 @@ def viewClub(request):
     else:
         messages.error(request, 'Please log in first!')
         return redirect('/club/login')
+
+def clubdetails(request):
+    return render(request, 'club/clubdetails.html')

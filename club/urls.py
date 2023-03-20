@@ -16,4 +16,5 @@ urlpatterns = [
     path('contact/', views.contact, name='contact'),
     path('myclubevaluate/', views.myclubevaluate, name='myclubevaluate'),
     path('myclubmanage/', views.myclubmanage, name='myclubmanage'),
+    path('clubdetails/', views.clubdetails, name='clubdetails'),
 ]
