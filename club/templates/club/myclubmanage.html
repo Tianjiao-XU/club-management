@@ -11,46 +11,59 @@
 {% block sidebar_block %}
     <h1>Approval</h1>
     <div class="jumbotron">
+        {% for approval in approval_list %}
         <div class="row clearfix">
             <div class="col-md-1 column">
             </div>
             <div class="col-md-7 column">
-                <h2>Name</h2>
-                <h3>Email</h3>
-                <h3>Birthday</h3>
+                <h2>{{approval.user.username}}</h2>
+                <h3>{{approval.user.email}}</h3>
+                <h3>{{approval.user.birthday}}</h3>
                 <p>
                     Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
                     mauris
                     condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
                     euismod. Donec sed odio dui.
                 </p>
-                <button type="submit" class="btn btn-primary btn-large">approve</button>
-                <button type="submit" class="btn btn-primary btn-large">reject</button>
+                <form action="{% url 'club:myclubmanage' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-large" name="approval" value={{approval.user.email}}>approve</button>
+                    <button type="submit" class="btn btn-primary btn-large" name="approval" value="reject{{approval.user.email}}">reject</button>
+                </form>
+
             </div>
             <div class="col-md-3 column">
                 <img src="/static/images/sports.jpg" class="img-circle img-responsive" alt="Responsive image"/>
             </div>
         </div>
         <hr/>
-        <div class="row clearfix">
-            <div class="col-md-1 column">
-            </div>
-            <div class="col-md-7 column">
-                <h2>Name</h2>
-                <h3>Email</h3>
-                <h3>Birthday</h3>
-                <p>
-                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor
-                    mauris
-                    condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis
-                    euismod. Donec sed odio dui.
-                </p>
-                <button type="submit" class="btn btn-primary btn-large">approve</button>
-                <button type="submit" class="btn btn-primary btn-large">reject</button>
-            </div>
-            <div class="col-md-3 column">
-                <img src="/static/images/sports.jpg" class="img-circle img-responsive" alt="Responsive image"/>
-            </div>
-        </div>
+        {% endfor %}
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+<!--        <div class="row clearfix">-->
+<!--            <div class="col-md-1 column">-->
+<!--            </div>-->
+<!--            <div class="col-md-7 column">-->
+<!--                <h2>Name</h2>-->
+<!--                <h3>Email</h3>-->
+<!--                <h3>Birthday</h3>-->
+<!--                <p>-->
+<!--                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor-->
+<!--                    mauris-->
+<!--                    condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis-->
+<!--                    euismod. Donec sed odio dui.-->
+<!--                </p>-->
+<!--                <button type="submit" class="btn btn-primary btn-large">approve</button>-->
+<!--                <button type="submit" class="btn btn-primary btn-large">reject</button>-->
+<!--            </div>-->
+<!--            <div class="col-md-3 column">-->
+<!--                <img src="/static/images/sports.jpg" class="img-circle img-responsive" alt="Responsive image"/>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 {% endblock %}

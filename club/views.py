@@ -7,10 +7,10 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import JsonResponse
-from club.models import User, Club, Approval, Comment
+from club.models import User, Club, Approval
 from club.forms import RegisterForm, LoginForm, CreateClubForm
 import json
-
+from django.contrib.sessions.backends.db import SessionStore
 
 def general_response(code, message="", data=[]):
     result = {"code": code, "message": message, "data": data}
@@ -31,14 +31,46 @@ def myClub(request):
     # if request.session.test_cookie_worked():
     #     print("TEST COOKIE WORKED!")
     #     request.session.delete_test_cookie()
-    return render(request, 'club/myclub.html')
+    user_email = request.session.get('email')
+    user = User.objects.get(email=user_email)
+    member_list = User.objects.filter(club=user.club)
+    return render(request, 'club/myclub.html',{"member_list":member_list})
 
 def myclubevaluate(request):
+    if request.method == 'POST':
+        print(request.session.get('email'))
+        club = User.objects.get(email=request.session.get('email')).club
+        if request.POST.get('evaluate') == 'like':
+            club.likes += 1
+        else:
+            club.dislikes += 1
+        club.save()
+
     return render(request, 'club/myclubevaluate.html')
 
 
 def myclubmanage(request):
-    return render(request, 'club/myclubmanage.html')
+    user_email = request.session.get('email')
+    user = User.objects.get(email=user_email)
+    if request.method == 'POST':
+        if user == user.club.manager:
+            new_user_email = request.POST.get('approval')
+            if new_user_email[:6] == 'reject':
+                new_user = User.objects.get(email=new_user_email[6:])
+                Approval.objects.get(user=new_user).delete()
+            else:
+                new_user = User.objects.get(email=new_user_email)
+                new_user.club = user.club
+                new_user.save()
+                Approval.objects.get(user=new_user).delete()
+            approval_list = Approval.objects.filter(club=user.club)
+            return render(request, 'club/myclubmanage.html',{"approval_list":approval_list})
+        else:
+            messages.error(request, '你不是管理员我的bro')
+            print("你不是管理员")
+    approval_list = Approval.objects.filter(club=user.club)
+
+    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list})
 
 
 def contact(request):

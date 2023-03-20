@@ -12,13 +12,24 @@
     <h1>Evaluate your club</h1>
     <div class="jumbotron">
         <div class="rate-content">
-            <input type="radio" id="like" name="evaluate" value="like">
-            <label for="like">like</label>
-            <input type="radio" id="dislike" name="evaluate" value="dislike">
-            <label for="dislike">dislike</label>
-            <div>
-                <button type="submit" class="btn btn-primary btn-large" href="{% url 'club:myclub' %}">submit</button>
-            </div>
+            <form action="{% url 'club:myclubevaluate' %}" method="post">
+                {% csrf_token %}
+                <input type="radio" id="like" name="evaluate" value="like">
+                <label for="like">like</label>
+                <input type="radio" id="dislike" name="evaluate" value="dislike">
+                <label for="dislike">dislike</label>
+                <div>
+                    <button type="submit" class="btn btn-primary btn-large" href="{% url 'club:myclub' %}">submit</button>
+                </div>
+            </form>
+<!--    {% if messages %}-->
+<!--    <ul class="alert-danger">-->
+<!--        {% for message in messages %}-->
+<!--        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>-->
+<!--        {% endfor %}-->
+<!--    </ul>-->
+<!--    {% endif %}-->
+
         </div>
     </div>
 {% endblock %}

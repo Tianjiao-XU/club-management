@@ -5,16 +5,17 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cms.settings')
 import django
 
 django.setup()
-from club.models import Club, User
+from club.models import Club, User, Approval
 
 # from django.contrib.auth.models import User
 
 
 def populate():
     User_Data = [
-        {"username": "k2", "password": "123123", "email": "2@qq.com","birthday": "2001-1-18"},
-        {"username": "k3", "password": "123123", "email": "3@qq.com","birthday": "2002-1-18"},
-        {"username": "k4", "password": "123123", "email": "4@qq.com","birthday": "2003-1-18"},
+        {"username": "k2", "password": "123123", "email": "2@qq.com","birthday": "2002-1-18"},
+        {"username": "k3", "password": "123123", "email": "3@qq.com","birthday": "2003-1-18"},
+        {"username": "k4", "password": "123123", "email": "4@qq.com","birthday": "2004-1-18"},
+        {"username": "k5", "password": "123123", "email": "5@qq.com","birthday": "2005-1-18"}
     ]
 
     Club_Data = [
@@ -26,20 +27,15 @@ def populate():
          "dislikes": 3},
     ]
 
-    # UserProfile_Data = [
-    #     {"birthday": "2001-1-18", "website": "www.1399.com","picture":"profile_images/cat.jpg"},
-    #     {"birthday": "2002-10-18", "website": "www.2399.com"},
-    #     {"birthday": "2003-10-18", "website": "www.3399.com"},
-    #
-    # ]
-
-    for i in range(len(User_Data)):
+    for i in range(len(Club_Data)):
         user_instance = add_User(User_Data[i])
-        # add_UserProfile(user_instance, UserProfile_Data[i])
+        club_instance = add_Club(Club_Data[i])
+        user_instance.club = club_instance
+        user_instance.save()
 
-    for i in Club_Data:
-        add_Club(i)
-
+    user5 = add_User(User_Data[-1])
+    approval = Approval.objects.create(user=user5,club=Club.objects.get(name='a_club'))
+    approval.save()
 
 def add_User(user_data):
     user = User.objects.get_or_create(email=user_data["email"])[0]
@@ -47,6 +43,7 @@ def add_User(user_data):
     user.set_password(user_data['password'])
     user.birthday = user_data["birthday"]
     user.save()
+    return user
     # return user
 
 
@@ -67,6 +64,9 @@ def add_Club(club_data):
     club.likes = club_data["likes"]
     club.dislikes = club_data["dislikes"]
     club.save()
+    return club
+
+
 
 
 if __name__ == '__main__':

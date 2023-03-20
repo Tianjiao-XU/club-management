@@ -32,15 +32,15 @@ class User(AbstractUser):
 
 
 class Approval(models.Model):
-    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    club = models.ForeignKey(Club, on_delete=models.DO_NOTHING)
-    completed = models.BooleanField(default=0)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE)
+    completed = models.BooleanField(default=False)
 
     class Meta:
         db_table = "Approval"
 
-    def __str__(self):
-        return self.id
+    # def __str__(self):
+    #     return self.str(id)
 
 
 class Comment(models.Model):
