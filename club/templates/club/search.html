@@ -16,9 +16,6 @@
             <li>{{ message }}</li>
         </div>
     {% endif %}
-
-
-
     <div class="searchbar">
         <div class="searchbar-wrapper">
             <div class="searchbar-left">
@@ -54,10 +51,10 @@
 {% endblock %}
 
 {% block sidebar_block %}
+{% for club in clubs %}
     <div class="row clearfix">
-        {% for club in clubs %}
             <div class="col-md-4 column">
-                <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
+                <img alt="140x140" src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
             </div>
             <div class="col-md-8 column">
                 <h1>Club name: {{club.name}}</h1>
@@ -68,6 +65,8 @@
                 <p class="form-control" id="description">{{ club.description }}</p>
                 <p><a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a></p>
             </div>
-        {% endfor %}
     </div>
+{% endfor %}
+
+
 {% endblock %}
