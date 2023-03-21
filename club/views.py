@@ -41,10 +41,13 @@ def evaluateClub(request):
 
 
 @login_required(login_url="/club/login")
-def manageClub(request):
-    user_email = request.session.get('email')
-    user = User.objects.get(email=user_email)
+def manageClub(request, club_id):
+    club = Club.objects.get(id=club_id)
+    if not club:
+        message = "Club does not exist!"
+        return render(request, 'club/index.html', {"message": message})
     if request.method == 'POST':
+        user = request.user
         if user == user.club.manager:
             new_user_email = request.POST.get('approval')
             if new_user_email[:6] == 'reject':
@@ -60,9 +63,9 @@ def manageClub(request):
         else:
             messages.error(request, 'you are not my manager')
             print("you are not my manager")
-    approval_list = Approval.objects.filter(club=user.club)
+    approval_list = Approval.objects.filter(club=club)
 
-    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":user.club})
+    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":club})
 
 
 def contact(request):
