@@ -30,7 +30,7 @@
                     {% endif %}
                 </div>
                 <div class="col-md-4 column">
-                    <a class="btn btn-success btn-lg" href="{% url 'club:evaluate_club' %}">Evaluate</a>
+                    <a class="btn btn-success btn-lg" href="{% url 'club:evaluate_club' club_id=club.id %}">Evaluate</a>
                 </div>
             </div>
         </div>

@@ -28,16 +28,39 @@ def index(request):
 
 
 @login_required(login_url="/club/login")
-def evaluateClub(request):
-    club = User.objects.get(email=request.session.get('email')).club
+def evaluateClub(request, club_id):
+    club = Club.objects.get(id=club_id)
+    if not club:
+        message = "Club does not exist!"
+        return render(request, 'club/myclubevaluate.html', {"message": message})
     if request.method == 'POST':
-        if request.POST.get('evaluate') == 'like':
+        choice = request.POST.get('evaluate')
+        if choice == 'like':
             club.likes += 1
         else:
             club.dislikes += 1
         club.save()
+    return render(request, 'club/myclubevaluate.html', {"club": club})
 
-    return render(request, 'club/myclubevaluate.html',{"club":club})
+
+@login_required(login_url="/club/login")
+def likeordislikeClub(request):
+    club_id = request.POST.get("club_id")
+    club = Club.objects.get(id=club_id)
+    if not club:
+        message = "Club does not exist!"
+        return render(request, 'club/myclubevaluate.html', {"message": message}, {"club": club})
+    choice = request.POST.get('evaluate')
+    if not choice:
+        message = "You must select one!"
+        return render(request, 'club/myclubevaluate.html', {"message": message}, {"club": club})
+    if choice == 'like':
+        club.likes += 1
+    else:
+        club.dislikes += 1
+    club.save()
+    member_list = User.objects.filter(club=club)
+    return render(request, 'club/clubdetails.html', {"member_list": member_list, "club": club})
 
 
 @login_required(login_url="/club/login")
@@ -47,8 +70,35 @@ def manageClub(request, club_id):
         message = "Club does not exist!"
         return render(request, 'club/myclubmanage.html', {"message": message})
     approval_list = Approval.objects.filter(club=club)
-
     return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":club})
+
+
+@login_required(login_url="/club/login")
+def dealApproval(request):
+    if request.method == 'POST':
+        user = request.user
+        club_id = request.POST.get("club_id")
+        club = Club.objects.get(id=club_id)
+        if not club:
+            message = "Club does not exist!"
+            return render(request, 'club/myclubmanage.html', {"message": message})
+        if user == user.club.manager:
+            new_user_email = request.POST.get('approval')
+            if new_user_email[:6] == 'reject':
+                new_user = User.objects.get(email=new_user_email[6:])
+                Approval.objects.get(user=new_user).delete()
+            else:
+                new_user = User.objects.get(email=new_user_email)
+                new_user.club = user.club
+                new_user.save()
+                Approval.objects.get(user=new_user).delete()
+            approval_list = Approval.objects.filter(club=user.club)
+            return render(request, 'club/myclubmanage.html', {"approval_list": approval_list, "club": club})
+        else:
+            messages.error(request, 'you are not my manager')
+            message = "you are not the manager"
+            print("you are not my manager")
+            return render(request, 'club/myclubmanage.html', {"message": message, "club": club})
 
 
 def contact(request):
