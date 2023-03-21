@@ -38,26 +38,15 @@
                 </form>
         </div>
     </div>
-{#    <h1>Search by city</h1>#}
-{#    <div class="search">#}
-{#        <form method="post" action="{% url 'club:search' %}">#}
-{#            {% csrf_token %}#}
-{#            <input type="text" class="searchTerm" placeholder="city" name="location"  >#}
-{#            <button type="submit" class="searchTerm">#}
-{#                <i class="fa fa-search"></i>#}
-{#            </button>#}
-{#        </form>#}
-{#    </div>#}
+<hr>
 {% endblock %}
 
 {% block sidebar_block %}
 {% for club in clubs %}
-    <div class="row clearfix">
-            <div class="col-md-4 column">
-                <img alt="140x140" src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
-            </div>
-            <div class="col-md-8 column">
-                <h1>Club name: {{club.name}}</h1>
+    <div class="col-md-4 column">
+            <div class="jumbotron">
+                <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
+                <h2>{{ club.name }}</h2>
                 <li>Club type: {{club.type}}</li>
                 <li>Club city: {{club.location}}</li>
                 <li>Like: {{club.likes}}</li>
