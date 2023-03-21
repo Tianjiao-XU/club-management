@@ -19,7 +19,7 @@
              {% endif %}
             <form action="{% url 'club:like_or_dislike_club' %}" method="post">
                 {% csrf_token %}
-                <input type="radio" id="like" name="evaluate" value="like">
+                <input type="radio" id="like" name="evaluate" value="like" checked="true">
                 <label for="like">like</label>
                 <input type="radio" id="dislike" name="evaluate" value="dislike">
                 <label for="dislike">dislike</label>
