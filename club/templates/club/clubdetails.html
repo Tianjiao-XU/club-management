@@ -18,12 +18,11 @@
                 <li class="h3">Description</li>
                 <p class="form-control" id="description">{{ club.description }}</p>
             </div>
-            <a class="btn" href="#">Join »</a>
             {% if not user in member_list %}
                 <form method="post" action="{% url 'club:join_club' %}">
                     {% csrf_token %}
-                    <input type="hidden" name="club_id" value="club_id">
-                    <button type="submit">Join</button>
+                    <input type="hidden" name="club_id" value="{{ club.id }}">
+                    <button type="submit" class="btn btn-primary" >Join</button>
                 </form>
             {% endif %}
         </div>

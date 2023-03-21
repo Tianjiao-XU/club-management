@@ -27,6 +27,7 @@ def index(request):
     return response
 
 
+@login_required(login_url="/club/login")
 def myClub(request):
     #if request.session.test_cookie_worked():
         #print("TEST COOKIE WORKED!")
@@ -217,7 +218,7 @@ def createClub(request):
         return redirect('/club/login')
 
 
-@login_required(login_url='/club/login')
+@login_required(login_url="/club/login")
 def viewClub(request, club_id):
     if request.user.is_authenticated:
         club = Club.objects.get(id=club_id)
@@ -233,9 +234,23 @@ def viewClub(request, club_id):
         messages.error(request, 'Please log in first!')
         return redirect('/club/login')
 
+
 def clubdetails(request):
     return render(request, 'club/clubdetails.html')
 
 
+@login_required(login_url="/club/login")
 def joinClub(request):
-    return render(request, 'club/contact.html')
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            club_id = request.POST.get("club_id")
+            if not Club.objects.get(id=club_id):
+                message = "CLube does not exist!"
+                return render(request, 'club/index.html', {"message": message})
+            user = User.objects.get(id=request.user.id)
+            approval = Approval(club_id=club_id, user=user)
+            approval.save()
+            return redirect("/club/")
+    else:
+        messages.error(request, 'Please log in first!')
+        return redirect('/club/login')
