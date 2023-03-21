@@ -1,14 +1,31 @@
 from club.models import User, Club
 from django import forms
 from django.contrib.auth import authenticate
+import re
 
 
 class RegisterForm(forms.ModelForm):
+    email = forms.EmailField(help_text="Please enter the email.")
+    username = forms.CharField(help_text="Please enter the username.")
     password = forms.CharField(widget=forms.PasswordInput(), help_text="Please enter the password.")
+    birthday = forms.DateField(input_formats=['%Y-%m-%d'], help_text="Please enter the birthday.")
 
     class Meta:
         model = User
         fields = ('username', 'email', 'password', 'birthday')
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if len(username) < 2:
+            raise forms.ValidationError("Username is too short.")
+        return username
+
+    def clean_password(self):
+        password = self.cleaned_data['password']
+        pattern = r'^(?=.*[A-Za-z])(?=.*\d).+$'
+        if not (len(password) < 8 and re.match(pattern, password)):
+            raise forms.ValidationError("The password should be at least 8 characters long and contain at least one letter and one number.")
+        return password
 
 
 class LoginForm(forms.ModelForm):

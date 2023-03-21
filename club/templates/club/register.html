@@ -18,10 +18,37 @@
 
                 {% csrf_token %}
                 <!-- Display each form -->
-                {{ register_form.as_p }}
+{#                {{ register_form.as_div }}#}
+                {% if register_form.errors %}
+                    <div class="alert-danger">
+                        <ul>
+                        {% for field_errors in register_form.errors.values %}
+                            {% for error in field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="form-group">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username">
+                </div>
+                <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
+                </div>
+                <div class="form-group">
+                <label for="birthday" class="form-label">Birthday</label>
+                <input type="date" class="form-control" id="birthday" name="birthday" placeholder="Enter your birthday">
+                </div>
 
                 <!-- Provide a button to click to submit the form. -->
-                <input type="submit" name="submit" value="Register"/>
+                <button type="submit" class="btn btn-primary">Register</button>
             </form>
         {% endif %}
     </div>
