@@ -11,8 +11,11 @@
             <li class="h2">City: {{ club.location }}</li>
             <li class="h2">Likes:{{ club.likes }}</li>
 {#            <a class="btn" href="#">Join »</a>#}
-            <a class="btn" href="{% url 'club:myclubevaluate' %}">Evaluate »</a>
-            <a class="btn" href="{% url 'club:myclubmanage' %}">Manage »</a>
+            <a class="btn btn-primary" href="{% url 'club:myclubevaluate' %}">Evaluate</a>
+            <p></p>
+            {% if user == club.manager %}
+                <a class="btn btn-primary" href="{% url 'club:myclubmanage' %}">Manage</a>
+            {% endif %}
         </div>
         </div>
         <div class="col-md-8 column">
