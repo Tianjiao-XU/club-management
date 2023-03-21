@@ -23,7 +23,7 @@ class RegisterForm(forms.ModelForm):
     def clean_password(self):
         password = self.cleaned_data['password']
         pattern = r'^(?=.*[A-Za-z])(?=.*\d).+$'
-        if not (len(password) < 8 and re.match(pattern, password)):
+        if not (len(password) >= 8 and re.match(pattern, password)):
             raise forms.ValidationError("The password should be at least 8 characters long and contain at least one letter and one number.")
         return password
 
