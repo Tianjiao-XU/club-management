@@ -12,18 +12,18 @@
 {% block clubdetails_block %}
     <p>
     </p>
-    <h1>Members</h1>
-    <div class="jumbotron">
-        {% for member in member_list %}
-        <div class="row clearfix">
-            <div class="col-md-7 column">
-                <h2>Name: {{member.username}}</h2>
-                <h3 class="glyphicon glyphicon-envelope">{{member.email}}</h3>
-                <h3 class="glyphicon glyphicon-calendar">{{member.birthday}}</h3>
+    <h1>Members:</h1>
+    {% for member in member_list %}
+        <div class="col-md-6 column">
+            <div class="jumbotron">
+                <h2>Name: {{ member.username }}</h2>
+                <h3 class="glyphicon glyphicon-envelope">{{ member.email }}</h3>
+                <h3 class="glyphicon glyphicon-calendar">{{ member.birthday }}</h3>
             </div>
         </div>
-        <hr />
-        {% endfor %}
+    {% endfor %}
+
+
 <!--        <div class="row clearfix">-->
 <!--            <div class="col-md-1 column">-->
 <!--            </div>-->
