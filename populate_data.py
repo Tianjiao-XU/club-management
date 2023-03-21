@@ -1,11 +1,12 @@
 import os
-import django
-from club.models import Club, User, Approval
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'cms.settings')
 
+import django
 
 django.setup()
+
+from club.models import Club, User, Approval
 
 
 def populate():
