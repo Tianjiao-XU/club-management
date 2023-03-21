@@ -5,12 +5,17 @@
 {% endblock %}
 
 {% block header_block %}
-    <link type="text/css" rel="stylesheet" href="{% static 'css/index.css' %}">
     <script src="http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/js/club.js"></script>
 {% endblock %}
 
 {% block body_block %}
+    <div class="schedule">
+        <a>Today is <span id="date"></span></a>
+        <a><span id="time"></span></a>
+        <script src="path/to/your/javascript.js"></script>
+    </div>
     <div class="row clearfix">
         <div class="col-md-2 column">
         </div>
@@ -59,52 +64,20 @@
 {% endblock %}
 
 {% block sidebar_block %}
-    <div class="center-block navbar navbar-default">
-    <p class="h1 text-center font-weight-bolder">Popular clubs</p>
-    </div>
     {% for club in club_list %}
         <div class="col-md-4 column">
             <div class="jumbotron">
-            <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
-            <h2>
-                {{ club.name }}
-            </h2>
-            <p>
-                {{ club.description }}
-            </p>
-            <p>
-                <a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a>
-            </p>
+                <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
+                <h2>
+                    {{ club.name }}
+                </h2>
+                <p>
+                    {{ club.description }}
+                </p>
+                <p>
+                    <a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a>
+                </p>
             </div>
         </div>
     {% endfor %}
-
-    <!--    <div class="col-md-4 column">-->
-    <!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
-    <!--        <h2>-->
-    <!--            Club2-->
-    <!--        </h2>-->
-    <!--        <p>-->
-    <!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
-    <!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
-    <!--            malesuada magna mollis euismod. Donec sed odio dui.-->
-    <!--        </p>-->
-    <!--        <p>-->
-    <!--            <a class="btn" href="#">View details »</a>-->
-    <!--        </p>-->
-    <!--    </div>-->
-    <!--    <div class="col-md-4 column">-->
-    <!--        <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>-->
-    <!--        <h2>-->
-    <!--            Club3-->
-    <!--        </h2>-->
-    <!--        <p>-->
-    <!--            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo,-->
-    <!--            tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem-->
-    <!--            malesuada magna mollis euismod. Donec sed odio dui.-->
-    <!--        </p>-->
-    <!--        <p>-->
-    <!--            <a class="btn" href="#">View details »</a>-->
-    <!--        </p>-->
-    <!--    </div>-->
 {% endblock %}

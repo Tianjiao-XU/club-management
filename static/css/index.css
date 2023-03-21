@@ -1,9 +1,0 @@
-body {
-    font-family: Arial;
-    margin: 0;
-    background-image:url(/static/images/background.jpg);
-    background-size: 100% 100%;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-    overflow-wrap: break-word;
-}
