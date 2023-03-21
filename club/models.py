@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from django.template.defaultfilters import slugify
 
 class Club(models.Model):
     name = models.CharField(max_length=20, unique=True)
@@ -11,6 +11,13 @@ class Club(models.Model):
     dislikes = models.IntegerField(default=0)
     manager = models.ForeignKey('User', on_delete=models.SET_NULL,  null=True, blank=True, related_name='managed_clubs')
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        if self.likes < 0:
+            self.likes = 0
+        if self.dislikes < 0:
+            self.dislikes = 0
+        super(Club, self).save(*args, **kwargs)
     class Meta:
         db_table = "Club"
 
