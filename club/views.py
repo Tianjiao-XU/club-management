@@ -45,24 +45,7 @@ def manageClub(request, club_id):
     club = Club.objects.get(id=club_id)
     if not club:
         message = "Club does not exist!"
-        return render(request, 'club/index.html', {"message": message})
-    if request.method == 'POST':
-        user = request.user
-        if user == user.club.manager:
-            new_user_email = request.POST.get('approval')
-            if new_user_email[:6] == 'reject':
-                new_user = User.objects.get(email=new_user_email[6:])
-                Approval.objects.get(user=new_user).delete()
-            else:
-                new_user = User.objects.get(email=new_user_email)
-                new_user.club = user.club
-                new_user.save()
-                Approval.objects.get(user=new_user).delete()
-            approval_list = Approval.objects.filter(club=user.club)
-            return render(request, 'club/myclubmanage.html',{"approval_list":approval_list})
-        else:
-            messages.error(request, 'you are not my manager')
-            print("you are not my manager")
+        return render(request, 'club/myclubmanage.html', {"message": message})
     approval_list = Approval.objects.filter(club=club)
 
     return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":club})
