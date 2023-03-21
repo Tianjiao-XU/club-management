@@ -17,7 +17,7 @@
                 <h2>{{approval.user.username}}</h2>
                 <h3 class="glyphicon glyphicon-envelope">{{approval.user.email}}</h3>
                 <h3 class="glyphicon glyphicon-calendar">{{approval.user.birthday}}</h3>
-                <form action="{% url 'club:myclubmanage' %}" method="post">
+                <form action="{% url 'club:manage_club' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-primary btn-large" name="approval" value={{approval.user.email}}>approve</button>
                     <button type="submit" class="btn btn-primary btn-large" name="approval" value="reject{{approval.user.email}}">reject</button>

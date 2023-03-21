@@ -28,7 +28,7 @@ def index(request):
 
 
 @login_required(login_url="/club/login")
-def myclubevaluate(request):
+def evaluateClub(request):
     club = User.objects.get(email=request.session.get('email')).club
     if request.method == 'POST':
         if request.POST.get('evaluate') == 'like':
@@ -41,7 +41,7 @@ def myclubevaluate(request):
 
 
 @login_required(login_url="/club/login")
-def myclubmanage(request):
+def manageClub(request):
     user_email = request.session.get('email')
     user = User.objects.get(email=user_email)
     if request.method == 'POST':
@@ -171,12 +171,12 @@ def visitor_cookie_handler(request):
     # If it's been more than a day since the last visit...
     if (datetime.now() - last_visit_time).seconds > 0:
         visits = visits + 1
-    # Update the last visit cookie now that we have updated the count
-    #     response.set_cookie('last_visit', str(datetime.now()))
+        # Update the last visit cookie now that we have updated the count
+        #     response.set_cookie('last_visit', str(datetime.now()))
         request.session['last_visit'] = str(datetime.now())
     else:
-    # Set the last visit cookie
-    #     response.set_cookie('last_visit', last_visit_cookie)
+        # Set the last visit cookie
+        #     response.set_cookie('last_visit', last_visit_cookie)
         request.session['last_visit'] = last_visit_cookie
 
     # Update/set the visits cookie
