@@ -9,6 +9,15 @@
 
 
 {% block clubdetails_block %}
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+            <div class="{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <h1>Approval</h1>
     <div class="jumbotron">
         {% for approval in approval_list %}
@@ -17,10 +26,11 @@
                 <h2>{{approval.user.username}}</h2>
                 <h3 class="glyphicon glyphicon-envelope">{{approval.user.email}}</h3>
                 <h3 class="glyphicon glyphicon-calendar">{{approval.user.birthday}}</h3>
-                <form action="{% url 'club:manage_club' club_id=club.id %}" method="post">
+                <form action="{% url 'club:deal_approval' %}" method="post">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary btn-large" name="approval" value={{approval.user.email}}>approve</button>
-                    <button type="submit" class="btn btn-primary btn-large" name="approval" value="reject{{approval.user.email}}">reject</button>
+                    <input type="hidden" name="approval_id" value="{{ approval.id }}">
+                    <button type="submit" class="btn btn-primary btn-large" name="approval" value="approve">approve</button>
+                    <button type="submit" class="btn btn-primary btn-large" name="approval" value="reject">reject</button>
                 </form>
 
             </div>
@@ -30,13 +40,6 @@
         </div>
         <hr/>
         {% endfor %}
-        {% if messages %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
 <!--        <div class="row clearfix">-->
 <!--            <div class="col-md-1 column">-->
 <!--            </div>-->

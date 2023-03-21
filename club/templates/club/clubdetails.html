@@ -13,7 +13,8 @@
                 <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
                 <p class="h3">Type: {{ club.type }}</p>
                 <p class="h3">City: {{ club.location }}</p>
-                <p class="h3">Like: {{ club.likes }}</p>
+                <p class="h3">Likes: {{ club.likes }}</p>
+                <p class="h3">Dislikes: {{ club.dislikes }}</p>
                 <p class="h3">Description: {{ club.description }}</p>
                 <div class="col-md-8 column">
                     {% if not user in member_list %}
@@ -34,6 +35,15 @@
         </div>
         <div class="col-md-8 column">
             <h1>Members</h1>
+            {% if messages %}
+                 <div class="alert alert-danger" role="alert">
+                    {% for message in messages %}
+                    <div class="{{ message.tags }}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
             <hr/>
             {% for member in member_list %}
                 <div class="col-md-6 column">

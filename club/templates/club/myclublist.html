@@ -12,6 +12,15 @@
 {% block body_block %}
 {#    <h1>My clubs:</h1>#}
     <hr>
+    {% if messages %}
+        <div class="alert alert-danger" role="alert">
+            {% for message in messages %}
+            <div class="{{ message.tags }}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     {% for club in club_list %}
         <div class="col-md-4 column">
             <div class="jumbotron">

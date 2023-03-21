@@ -31,8 +31,9 @@ def index(request):
 def evaluateClub(request, club_id):
     club = Club.objects.get(id=club_id)
     if not club:
-        message = "Club does not exist!"
-        return render(request, 'club/myclubevaluate.html', {"message": message})
+        messages.error(request, "Club does not exist!")
+        club_list = request.user.club.all()
+        return render(request, 'club/myclublist.html', {"club_list": club_list})
     if request.method == 'POST':
         choice = request.POST.get('evaluate')
         if choice == 'like':
@@ -48,12 +49,10 @@ def likeordislikeClub(request):
     club_id = request.POST.get("club_id")
     club = Club.objects.get(id=club_id)
     if not club:
-        message = "Club does not exist!"
-        return render(request, 'club/myclubevaluate.html', {"message": message}, {"club": club})
+        messages.error(request, "Club does not exist!")
+        club_list = request.user.club.all()
+        return render(request, 'club/myclublist.html', {"club_list": club_list})
     choice = request.POST.get('evaluate')
-    if not choice:
-        message = "You must select one!"
-        return render(request, 'club/myclubevaluate.html', {"message": message}, {"club": club})
     if choice == 'like':
         club.likes += 1
     else:
@@ -67,38 +66,50 @@ def likeordislikeClub(request):
 def manageClub(request, club_id):
     club = Club.objects.get(id=club_id)
     if not club:
-        message = "Club does not exist!"
-        return render(request, 'club/myclubmanage.html', {"message": message})
-    approval_list = Approval.objects.filter(club=club)
-    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":club})
+        messages.error(request, "Club does not exist!")
+        club_list = request.user.club.all()
+        return render(request, 'club/myclublist.html', {"club_list": club_list})
+    approval_list = Approval.objects.filter(club=club, completed=0)
+    return render(request, 'club/myclubmanage.html', {"approval_list": approval_list, "club": club})
 
 
 @login_required(login_url="/club/login")
 def dealApproval(request):
     if request.method == 'POST':
         user = request.user
-        club_id = request.POST.get("club_id")
-        club = Club.objects.get(id=club_id)
+        approval_id = request.POST.get("approval_id")
+        app = Approval.objects.get(id=approval_id)
+        if not app:
+            messages.error(request, "Approval does not exist!")
+            club_list = user.club.all()
+            return render(request, 'club/myclublist.html', {"club_list": club_list})
+        club = Club.objects.get(id=app.club_id)
         if not club:
-            message = "Club does not exist!"
-            return render(request, 'club/myclubmanage.html', {"message": message})
-        if user == user.club.manager:
-            new_user_email = request.POST.get('approval')
-            if new_user_email[:6] == 'reject':
-                new_user = User.objects.get(email=new_user_email[6:])
-                Approval.objects.get(user=new_user).delete()
-            else:
-                new_user = User.objects.get(email=new_user_email)
-                new_user.club = user.club
-                new_user.save()
-                Approval.objects.get(user=new_user).delete()
-            approval_list = Approval.objects.filter(club=user.club)
+            messages.error(request, "Club does not exist!")
+            club_list = request.user.club.all()
+            return render(request, 'club/myclublist.html', {"club_list": club_list})
+        pending_user = User.objects.get(id=app.user_id)
+        if not pending_user:
+            messages.error(request, "Club does not exist!")
+            approval_list = Approval.objects.filter(club=club, completed=0)
             return render(request, 'club/myclubmanage.html', {"approval_list": approval_list, "club": club})
+        approval = request.POST.get("approval")
+        if user == club.manager:
+            if approval == "approve":
+                pending_user.club.add(club)
+                app.completed = 1
+                app.save()
+            elif approval == "reject":
+                app.completed = 1
+                app.save()
+            else:
+                messages.error(request, "Approval is not valid!")
+                approval_list = Approval.objects.filter(club=club, completed=0)
+                return render(request, 'club/myclubmanage.html', {"approval_list": approval_list, "club": club})
         else:
-            messages.error(request, 'you are not my manager')
-            message = "you are not the manager"
-            print("you are not my manager")
-            return render(request, 'club/myclubmanage.html', {"message": message, "club": club})
+            messages.error(request, 'you are not the manager')
+        approval_list = Approval.objects.filter(club=club, completed=0)
+        return render(request, 'club/myclubmanage.html', {"approval_list": approval_list, "club": club})
 
 
 def contact(request):
@@ -126,10 +137,6 @@ def register(request):
             # Update our variable to indicate that the template
             # registration was successful.
             registered = True
-        else:
-            # Invalid form or forms - mistakes or something else?
-            # Print problems to the terminal.
-            print(register_form.errors)
     else:
         # Not a HTTP POST, so we render our form using two ModelForm instances.
         # These forms will be blank, ready for user input.
@@ -160,8 +167,8 @@ def search(request):
     if request.method == 'POST':
         key = request.POST.get("key")
         if not key:
-            message = "Search input is empty!"
-            return render(request, 'club/search.html', {"message": message})
+            messages.error(request, "Search input is empty!")
+            return render(request, 'club/search.html')
         results = list(Club.objects.filter(name__icontains=key))
         if not results:
             results = list(Club.objects.filter(type__icontains=key))
@@ -245,11 +252,12 @@ def viewClub(request, club_id):
     if request.user.is_authenticated:
         club = Club.objects.get(id=club_id)
         if not club:
-            message = "CLube does not exist!"
-            return render(request, 'club/index.html', {"message":message})
+            messages.error(request, "Club does not exist!")
+            club_list = request.user.club.all()
+            return render(request, 'club/myclublist.html', {"club_list": club_list})
         else:
             member_list = User.objects.filter(club=club)
-        return render(request, 'club/clubdetails.html', {"member_list":member_list,"club":club})
+            return render(request, 'club/clubdetails.html', {"member_list":member_list,"club":club})
     else:
         messages.error(request, 'Please log in first!')
         return redirect('/club/login')
@@ -260,9 +268,9 @@ def joinClub(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             club_id = request.POST.get("club_id")
-            if not Club.objects.get(id=club_id):
-                message = "Club does not exist!"
-                return render(request, 'club/index.html', {"message": message})
+            if not Club.objects.filter(id=club_id).first():
+                messages.error(request, "Club does not exist!")
+                return render(request, 'club/search.html')
             user = User.objects.get(id=request.user.id)
             approval = Approval(club_id=club_id, user=user)
             approval.save()

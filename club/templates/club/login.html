@@ -10,7 +10,7 @@
     <form id="login_form" method="post" action="{% url 'club:login' %}">
         {% csrf_token %}
         {% if login_form.errors %}
-            <div class="alert-danger">
+            <div class="alert alert-danger" role="alert">
                 <ul>
                 {% for field_errors in login_form.errors.values %}
                     {% for error in field_errors %}
@@ -30,8 +30,7 @@
         </div>
         <button type="submit" class="btn btn-primary">Login</button>
 
-
         <a href="{% url 'club:register' %}" class="btn btn-success">SignUp</a>
-    </div>
     </form>
+    </div>
 {% endblock %}

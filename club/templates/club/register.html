@@ -20,7 +20,7 @@
                 <!-- Display each form -->
 {#                {{ register_form.as_div }}#}
                 {% if register_form.errors %}
-                    <div class="alert-danger">
+                    <div class="alert alert-danger" role="alert">
                         <ul>
                         {% for field_errors in register_form.errors.values %}
                             {% for error in field_errors %}
