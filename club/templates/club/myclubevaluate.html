@@ -20,12 +20,12 @@
             <form action="{% url 'club:like_or_dislike_club' %}" method="post">
                 {% csrf_token %}
                 <input type="radio" id="like" name="evaluate" value="like" checked="true">
-                <label for="like">like</label>
+                <label for="like" class="h2">like</label>
                 <input type="radio" id="dislike" name="evaluate" value="dislike">
-                <label for="dislike">dislike</label>
+                <label for="dislike" class="h2">dislike</label>
                 <div>
                     <input type="hidden" name="club_id" value="{{ club.id }}">
-                    <button type="submit" class="btn btn-primary btn-large">submit</button>
+                    <button type="submit" class="btn btn-primary btn-lg">submit</button>
                 </div>
             </form>
         </div>
