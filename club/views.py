@@ -218,22 +218,24 @@ def createClub(request):
 
 
 @login_required(login_url='/club/login')
-def viewClub(request):
+def viewClub(request, club_id):
     if request.user.is_authenticated:
-        if request.method == "POST":
-            club_id = request.POST.get("club_id")
-            club = Club.objects.get(id=club_id)
-
-            if not club:
-                message = "CLube name has already been used"
-                return general_response(400, message)
-            else:
-                data = {"name": club["name"], "type": club["type"], "location": club["location"],
-                        "description": club["description"], "likes": club["likes"], "dislikes": club["dislikes"]}
-            return render(request, 'club/myclub.html', locals())
+        club = Club.objects.get(id=club_id)
+        if not club:
+            message = "CLube does not exist!"
+            return render(request, 'club/index.html', {"message":message})
+        else:
+            # data = {"name": club["name"], "type": club["type"], "location": club["location"],
+            #         "description": club["description"], "likes": club["likes"], "dislikes": club["dislikes"]}
+            member_list = User.objects.filter(club=club)
+        return render(request, 'club/clubdetails.html', {"member_list":member_list,"club":club})
     else:
         messages.error(request, 'Please log in first!')
         return redirect('/club/login')
 
 def clubdetails(request):
     return render(request, 'club/clubdetails.html')
+
+
+def joinClub(request):
+    return render(request, 'club/contact.html')

@@ -65,7 +65,7 @@
                 {{ club.description }}
             </p>
             <p>
-                <a class="btn" href="#">View details »</a>
+                <a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a>
             </p>
         </div>
     {% endfor %}
