@@ -49,16 +49,18 @@
                 <div class="col-md-6 column">
                     <div class="jumbotron">
                         <h2>{{ member.username }}</h2>
-                        <form method="post" action="{% url 'club:remove_member' %}">
-                            {% csrf_token %}
-                            <input type="hidden" name="member_id" value="{{ member.id }}">
-                            <input type="hidden" name="club_id" value="{{ club.id }}">
-                            {% if member == user %}
-                                <button type="button" class="btn btn-danger pull-right" disabled="disabled">remove</button>
-                            {% else %}
-                                <button type="button" class="btn btn-danger pull-right">remove</button>
-                            {% endif %}
-                        </form>
+                        {% if club.manager == user %}
+                            <form method="post" action="{% url 'club:remove_member' %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="member_id" value="{{ member.id }}">
+                                <input type="hidden" name="club_id" value="{{ club.id }}">
+                                {% if member == user %}
+                                    <button type="submit" class="btn btn-danger pull-right" disabled="disabled">remove</button>
+                                {% else %}
+                                    <button type="submit" class="btn btn-danger pull-right">remove</button>
+                                {% endif %}
+                            </form>
+                        {% endif %}
                         <h3 class="glyphicon glyphicon-envelope">{{ member.email }}</h3>
                         <h3 class="glyphicon glyphicon-calendar">{{ member.birthday }}</h3>
                     </div>
