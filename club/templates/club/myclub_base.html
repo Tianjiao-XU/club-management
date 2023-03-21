@@ -7,12 +7,14 @@
         <div class="col-md-5 column">
             <h1>Club: {{ club.name }}</h1>
             <img alt="140x140" src="/static/images/sports.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <div class="jumbotron">
             <li class="h2">Type: {{ club.type }}</li>
             <li class="h2">City: {{ club.location }}</li>
             <li class="h2">Likes:{{ club.likes }}</li>
             <a class="btn" href="#">Join »</a>
             <a class="btn" href="{% url 'club:myclubevaluate' %}">Evaluate »</a>
             <a class="btn" href="{% url 'club:myclubmanage' %}">Manage »</a>
+        </div>
         </div>
         <div class="col-md-5 column">
             {% block clubdetails_block %}
