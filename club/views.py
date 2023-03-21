@@ -193,7 +193,11 @@ def createClub(request):
         if request.method == "POST":
             club_form = CreateClubForm(request.POST)
             if club_form.is_valid():
-                club_form.save(commit=True)
+                club = club_form.save()
+                club.manager = request.user
+                club.save()
+                user = request.user
+                user.club.add(club)
                 return redirect('/club/')
         else:
             club_form = CreateClubForm()
