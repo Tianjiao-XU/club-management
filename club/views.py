@@ -12,6 +12,7 @@ from club.forms import RegisterForm, LoginForm, CreateClubForm
 import json
 from django.contrib.sessions.backends.db import SessionStore
 
+
 def general_response(code, message="", data=[]):
     result = {"code": code, "message": message, "data": data}
     return HttpResponse(json.dumps(result))
@@ -32,12 +33,14 @@ def myClub(request):
     #if request.session.test_cookie_worked():
         #print("TEST COOKIE WORKED!")
     #request.session.delete_test_cookie()
-    user_email = request.session.get('email')
-    user = User.objects.get(email=user_email)
-    club = user.club
-    member_list = User.objects.filter(club=user.club)
+    # user_email = request.session.get('email')
+    # user = User.objects.get(email=user_email)
+    club = request.user.club
+    member_list = User.objects.filter(club=club)
     return render(request, 'club/myclub.html',{"member_list":member_list,"club":club})
 
+
+@login_required(login_url="/club/login")
 def myclubevaluate(request):
     club = User.objects.get(email=request.session.get('email')).club
     if request.method == 'POST':
@@ -50,6 +53,7 @@ def myclubevaluate(request):
     return render(request, 'club/myclubevaluate.html',{"club":club})
 
 
+@login_required(login_url="/club/login")
 def myclubmanage(request):
     user_email = request.session.get('email')
     user = User.objects.get(email=user_email)
@@ -79,24 +83,14 @@ def contact(request):
 
 
 def register(request):
-# A boolean value for telling the template
-# whether the registration was successful.
-# Set to False initially. Code changes value to
-# True when registration succeeds.
     registered = False
-
-# If it's a HTTP POST, we're interested in processing form data.
     if request.method == 'POST':
-# Attempt to grab information from the raw form information.
-# Note that we make use of both UserForm and UserProfileForm.
         register_form = RegisterForm(request.POST)
-
-# If the two forms are valid...
         if register_form.is_valid():
-        # Save the user's form data to the database.
+            # Save the register form data to the database.
             user = register_form.save()
-         # Now we hash the password with the set_password method.
-         # Once hashed, we can update the user object.
+            # Now we hash the password with the set_password method.
+            # Once hashed, we can update the user object.
             user.set_password(user.password)
             user.save()
 
@@ -113,15 +107,12 @@ def register(request):
         register_form = RegisterForm()
 
     # Render the template depending on the context.
-    return render(request,
-                'club/register.html',
-                context = {'register_form': register_form, 'registered': registered})
+    return render(request, 'club/register.html', context={'register_form': register_form, 'registered': registered})
 
 
 def user_login(request):
     if request.user.is_authenticated:
         return redirect('/club/')
-
     # If the request is a HTTP POST, try to pull out the relevant information.
     if request.method == 'POST':
         login_form = LoginForm(request.POST)
@@ -138,19 +129,17 @@ def user_login(request):
 
 def search(request):
     if request.method == 'POST':
-        if request.POST.get('type'):
-            print(request.POST['type'])
-            a = request.POST['type']
-            results = Club.objects.filter(type=a)
-        else:
-            print(request.POST['location'])
-            a = request.POST['location']
-            results = Club.objects.filter(location=a)
-        clubs = [{'name': obj.name, 'type': obj.type, 'description': obj.description,'location':obj.location,'likes':obj.likes,'dislikes':obj.dislikes} for obj in results]
-        print(clubs)
-        return render(request,'club/search.html', {"clubs":clubs})
+        key = request.POST.get("key")
+        if not key:
+            message = "Search input is empty!"
+            return render(request, 'club/search.html', {"message": message})
+        results = list(Club.objects.filter(name__icontains=key))
+        if not results:
+            results = list(Club.objects.filter(type__icontains=key))
+            if not results:
+                results = list(Club.objects.filter(location__icontains=key))
+        return render(request, 'club/search.html', {"clubs": results})
     return render(request, 'club/search.html')
-
 
 
 # def logout(request):
@@ -160,12 +149,12 @@ def search(request):
 #         return HttpResponse("You are not logged in")
 # Use the login_required() decorator to ensure only those logged in can
 # access the view.
+
 @login_required
 def user_logout(request):
-# Since we know the user is logged in, we can now just log them out.
+    # Since we know the user is logged in, we can now just log them out.
     logout(request)
-# Take the user back to the homepage.
-
+    # Take the user back to the homepage.
     return redirect(reverse('club:index'))
 
 
@@ -202,7 +191,7 @@ def visitor_cookie_handler(request):
     request.session['visits'] = visits
 
 
-@login_required(login_url='/club/login')
+@login_required(login_url="/club/login")
 def createClub(request):
     if request.user.is_authenticated:
         if request.method == "POST":
@@ -235,17 +224,13 @@ def viewClub(request, club_id):
         return redirect('/club/login')
 
 
-def clubdetails(request):
-    return render(request, 'club/clubdetails.html')
-
-
 @login_required(login_url="/club/login")
 def joinClub(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             club_id = request.POST.get("club_id")
             if not Club.objects.get(id=club_id):
-                message = "CLube does not exist!"
+                message = "Club does not exist!"
                 return render(request, 'club/index.html', {"message": message})
             user = User.objects.get(id=request.user.id)
             approval = Approval(club_id=club_id, user=user)

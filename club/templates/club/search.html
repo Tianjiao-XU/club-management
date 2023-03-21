@@ -9,29 +9,32 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1>Search by type</h1>
-
+{#    <h1>Search by type</h1>#}
+    {% if message %}
+        <div class="alert-danger">
+            <li>{{ message }}</li>
+        </div>
+    {% endif %}
     <div class="search">
         <form method="post" action="{% url 'club:search' %}">
             {% csrf_token %}
-            <input type="text" class="searchTerm" placeholder="type" name="type">
+            <input type="text" class="searchTerm" placeholder="Search by name, type or location" name="key">
             <button type="submit" class="searchTerm">
                 <i class="fa fa-search"></i>
             </button>
         </form>
 
     </div>
-    <h1>Search by city</h1>
-    <div class="search">
-        <form method="post" action="{% url 'club:search' %}">
-            {% csrf_token %}
-            <input type="text" class="searchTerm" placeholder="city" name="location"  >
-            <button type="submit" class="searchTerm">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
-
-    </div>
+{#    <h1>Search by city</h1>#}
+{#    <div class="search">#}
+{#        <form method="post" action="{% url 'club:search' %}">#}
+{#            {% csrf_token %}#}
+{#            <input type="text" class="searchTerm" placeholder="city" name="location"  >#}
+{#            <button type="submit" class="searchTerm">#}
+{#                <i class="fa fa-search"></i>#}
+{#            </button>#}
+{#        </form>#}
+{#    </div>#}
 {% endblock %}
 
 {% block sidebar_block %}
@@ -45,12 +48,8 @@
                 <li>Club type: {{club.type}}</li>
                 <li>Club city: {{club.location}}</li>
                 <li>Like" {{club.likes}}</li>
-                <p>
-                    {{club.description}}
-<!--                    Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris-->
-<!--                    condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis-->
-<!--                    euismod. Donec sed odio dui.-->
-                </p>
+                <li class="h3">Description</li>
+                <p class="form-control" id="description">{{ club.description }}</p>
                 <p>
                     <a class="btn" href="#">View details »</a>
                 </p>
