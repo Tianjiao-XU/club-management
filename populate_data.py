@@ -34,12 +34,6 @@ def populate():
         {"name": "The Advocates", "type": "Political", "location": "Beijing",
          "description": "The Advocates is a club for individuals who are interested in political issues and are committed to advocating for positive change in their communities. Our members engage in various activities such as attending political rallies, participating in advocacy campaigns, and engaging in political discourse.",
          "likes": 66, "dislikes": 5},
-        {"name": "Faithful", "type": "Religious", "location": "Leeds",
-         "description": "Faithful is a club for individuals who value their faith and are committed to spiritual growth. Our members engage in various activities such as attending religious services, participating in religious studies, and engaging in charitable work.",
-         "likes": 42, "dislikes": 8},
-        {"name": "Diversity", "type": "Ethnic", "location": "Shanghai",
-         "description": "Diversity is a club for individuals who appreciate and celebrate the diverse cultures that exist in our world. Our members engage in various activities such as attending cultural festivals, participating in cultural workshops, and engaging in cultural exchange programs.",
-         "likes": 201, "dislikes": 37},
         {"name": "Paws and Claws", "type": "Animals", "location": "Shenzhen",
          "description": "Paws and Claws is a club for individuals who love animals and are committed to animal welfare. Our members engage in various activities such as volunteering at animal shelters, participating in animal rescue missions, and advocating for animal rights.",
          "likes": 173, "dislikes": 18},
@@ -48,7 +42,8 @@ def populate():
     for i in range(len(Club_Data)):
         user_instance = add_User(User_Data[i%len(User_Data)])
         club_instance = add_Club(Club_Data[i])
-        user_instance.club = club_instance
+        # user_instance.club = club_instance
+        user_instance.club.add(club_instance)
         user_instance.save()
         club_instance.manager = user_instance
         club_instance.save()

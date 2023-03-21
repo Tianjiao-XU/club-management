@@ -22,7 +22,8 @@ class User(AbstractUser):
     username = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     birthday = models.DateField(blank=True, null=True)
-    club = models.ForeignKey(Club, on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
+    # club = models.ForeignKey(Club, on_delete=models.SET_NULL, null=True, blank=True, related_name='members')
+    club = models.ManyToManyField(Club)
 
     REQUIRED_FIELDS = ("username", "password", "birthday")
     USERNAME_FIELD = "email"

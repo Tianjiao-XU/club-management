@@ -35,9 +35,9 @@ def myClub(request):
     #request.session.delete_test_cookie()
     # user_email = request.session.get('email')
     # user = User.objects.get(email=user_email)
-    club = request.user.club
-    member_list = User.objects.filter(club=club)
-    return render(request, 'club/myclub.html',{"member_list":member_list,"club":club})
+    clubs = request.user.club.all()
+    # member_list = User.objects.filter(club__id=clubs)
+    return render(request, 'club/myclub.html', {"clubs":clubs})
 
 
 @login_required(login_url="/club/login")
