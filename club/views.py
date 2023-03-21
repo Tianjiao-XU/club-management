@@ -28,18 +28,6 @@ def index(request):
 
 
 @login_required(login_url="/club/login")
-def myClub(request):
-    #if request.session.test_cookie_worked():
-        #print("TEST COOKIE WORKED!")
-    #request.session.delete_test_cookie()
-    # user_email = request.session.get('email')
-    # user = User.objects.get(email=user_email)
-    clubs = request.user.club.all()
-    # member_list = User.objects.filter(club__id=clubs)
-    return render(request, 'club/myclub.html', {"clubs":clubs})
-
-
-@login_required(login_url="/club/login")
 def myclubevaluate(request):
     club = User.objects.get(email=request.session.get('email')).club
     if request.method == 'POST':
@@ -80,8 +68,12 @@ def myclubmanage(request):
 def contact(request):
     return render(request, 'club/contact.html')
 
+
+@login_required(login_url="/club/login")
 def myclublist(request):
-    return render(request, 'club/myclublist.html')
+    club_list = request.user.club.all()
+    return render(request, 'club/myclublist.html', {"club_list": club_list})
+
 
 def register(request):
     registered = False
@@ -216,8 +208,6 @@ def viewClub(request, club_id):
             message = "CLube does not exist!"
             return render(request, 'club/index.html', {"message":message})
         else:
-            # data = {"name": club["name"], "type": club["type"], "location": club["location"],
-            #         "description": club["description"], "likes": club["likes"], "dislikes": club["dislikes"]}
             member_list = User.objects.filter(club=club)
         return render(request, 'club/clubdetails.html', {"member_list":member_list,"club":club})
     else:

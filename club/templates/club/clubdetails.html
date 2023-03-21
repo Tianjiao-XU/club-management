@@ -24,6 +24,10 @@
                     <button type="submit" class="btn btn-primary" >Join</button>
                 </form>
             {% endif %}
+            <a class="btn" href="{% url 'club:myclubevaluate' %}">Evaluate »</a>
+            {% if user == club.manager %}
+                <a class="btn" href="{% url 'club:myclubmanage' %}">Manage »</a>
+            {% endif %}
         </div>
         <div class="col-md-5 column">
             <p>
