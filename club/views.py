@@ -81,6 +81,8 @@ def myclubmanage(request):
 def contact(request):
     return render(request, 'club/contact.html')
 
+def myclublist(request):
+    return render(request, 'club/myclublist.html')
 
 def register(request):
     registered = False

@@ -1,0 +1,89 @@
+{% extends 'club/base.html' %}
+{% load static %}
+{% block title_block %}
+    My club list
+{% endblock %}
+
+{% block header_block %}
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+{% endblock %}
+
+
+{% block body_block %}
+    <h1>My clubs:</h1>
+    <hr>
+    <div class="col-md-4 column">
+        <div class="jumbotron">
+            <img src="/static/images/clubtypes/Academic.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <h2>
+                clubname
+            </h2>
+            <p>
+                clubdescription
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4 column">
+        <div class="jumbotron">
+            <img src="/static/images/clubtypes/Animals.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <h2>
+                clubname
+            </h2>
+            <p>
+                clubdescription
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4 column">
+        <div class="jumbotron">
+            <img src="/static/images/clubtypes/Political.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <h2>
+                clubname
+            </h2>
+            <p>
+                clubdescription
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4 column">
+        <div class="jumbotron">
+            <img src="/static/images/clubtypes/Arts%20&%20Culture.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <h2>
+                clubname
+            </h2>
+            <p>
+                clubdescription
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-md-4 column">
+        <div class="jumbotron">
+            <img src="/static/images/clubtypes/Social%20&%20Service.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <h2>
+                clubname
+            </h2>
+            <p>
+                clubdescription
+            </p>
+            <p>
+                <a class="btn" href="#">View details »</a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

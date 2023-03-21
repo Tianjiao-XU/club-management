@@ -55,10 +55,13 @@
             </div>
         </div>
     </div>
+    <hr>
 {% endblock %}
 
 {% block sidebar_block %}
-    <p class="h1 mark">Popular clubs</p>
+    <div class="center-block navbar navbar-default">
+    <p class="h1 text-center font-weight-bolder">Popular clubs</p>
+    </div>
     {% for club in club_list %}
         <div class="col-md-4 column">
             <div class="jumbotron">
