@@ -60,9 +60,8 @@
                 <h1>Club name: {{club.name}}</h1>
                 <li>Club type: {{club.type}}</li>
                 <li>Club city: {{club.location}}</li>
-                <li>Like" {{club.likes}}</li>
-                <li>Description</li>
-                <p class="form-control" id="description">{{ club.description }}</p>
+                <li>Like: {{club.likes}}</li>
+                <li>Description: {{ club.description }}</li>
                 <p><a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a></p>
             </div>
     </div>

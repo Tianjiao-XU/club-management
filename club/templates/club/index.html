@@ -29,16 +29,19 @@
                             <img decoding="async" src="/static/images/slides/slide1.jpg"
                                  class="img-responsive center-block"
                                  alt="First slide">
+                            <div class="carousel-caption h1">Playing sports with peers</div>
                         </div>
                         <div class="item">
                             <img decoding="async" src="/static/images/slides/slide2.jpg"
                                  class="img-responsive center-block"
                                  alt="Second slide">
+                            <div class="carousel-caption h1">Appreciating art together</div>
                         </div>
                         <div class="item">
                             <img decoding="async" src="/static/images/slides/slide3.jpg"
                                  class="img-responsive center-block"
                                  alt="Third slide">
+                            <div class="carousel-caption h1">Relaxing with your pets</div>
                         </div>
                     </div>
                     <!-- Carousel navbar -->
@@ -59,7 +62,7 @@
     {% for club in club_list %}
         <div class="col-md-4 column">
             <div class="jumbotron">
-            <img alt="140x140" src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
             <h2>
                 {{ club.name }}
             </h2>

@@ -10,13 +10,12 @@
         </div>
         <div class="col-md-5 column">
             <h1>Club: {{ club.name }}</h1>
-            <img alt="140x140" src=src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
-            <div class="form-group">
+            <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
+            <div class="jumbotron">
                 <li class="h3">Type: {{ club.type }}</li>
                 <li class="h3">City: {{ club.location }}</li>
-                <li class="h3">Likes:{{ club.likes }}</li>
-                <li class="h3">Description</li>
-                <p class="form-control" id="description">{{ club.description }}</p>
+                <li class="h3">Like: {{ club.likes }}</li>
+                <li class="h3">Description: {{ club.description }}</li>
             </div>
             {% if not user in member_list %}
                 <form method="post" action="{% url 'club:join_club' %}">
