@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block body_block %}
+    <div class="jumbotron">
     <h1>Login to user</h1>
     <form id="login_form" method="post" action="{% url 'club:login' %}">
         {% csrf_token %}
@@ -27,6 +28,10 @@
         <label for="password" class="form-label">Password</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Login</button>
+
+
+        <a href="{% url 'club:register' %}" class="btn btn-success">SignUp</a>
+    </div>
     </form>
 {% endblock %}
