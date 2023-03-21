@@ -5,6 +5,7 @@
 body {
     font-family: Arial;
     margin: 0;
+    overflow-wrap: break-word;
 }
 
 .navbar {
