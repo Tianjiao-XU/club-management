@@ -23,6 +23,12 @@
                     <input type="hidden" name="club_id" value="{{ club.id }}">
                     <button type="submit" class="btn btn-primary" >Join</button>
                 </form>
+                <p></p>
+            {% endif %}
+            <a class="btn btn-primary" href="{% url 'club:evaluate_club' %}">Evaluate</a>
+            <p></p>
+            {% if user == club.manager %}
+                <a class="btn btn-primary" href="{% url 'club:manage_club' club_id=club.id %}">Manage</a>
             {% endif %}
         </div>
         <div class="col-md-5 column">

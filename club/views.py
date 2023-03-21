@@ -1,12 +1,11 @@
 from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.http import JsonResponse
 from club.models import User, Club, Approval
 from club.forms import RegisterForm, LoginForm, CreateClubForm
 import json
@@ -29,19 +28,7 @@ def index(request):
 
 
 @login_required(login_url="/club/login")
-def myClub(request):
-    #if request.session.test_cookie_worked():
-        #print("TEST COOKIE WORKED!")
-    #request.session.delete_test_cookie()
-    # user_email = request.session.get('email')
-    # user = User.objects.get(email=user_email)
-    clubs = request.user.club.all()
-    # member_list = User.objects.filter(club__id=clubs)
-    return render(request, 'club/myclub.html', {"clubs":clubs})
-
-
-@login_required(login_url="/club/login")
-def myclubevaluate(request):
+def evaluateClub(request):
     club = User.objects.get(email=request.session.get('email')).club
     if request.method == 'POST':
         if request.POST.get('evaluate') == 'like':
@@ -54,10 +41,13 @@ def myclubevaluate(request):
 
 
 @login_required(login_url="/club/login")
-def myclubmanage(request):
-    user_email = request.session.get('email')
-    user = User.objects.get(email=user_email)
+def manageClub(request, club_id):
+    club = Club.objects.get(id=club_id)
+    if not club:
+        message = "Club does not exist!"
+        return render(request, 'club/index.html', {"message": message})
     if request.method == 'POST':
+        user = request.user
         if user == user.club.manager:
             new_user_email = request.POST.get('approval')
             if new_user_email[:6] == 'reject':
@@ -73,13 +63,19 @@ def myclubmanage(request):
         else:
             messages.error(request, 'you are not my manager')
             print("you are not my manager")
-    approval_list = Approval.objects.filter(club=user.club)
+    approval_list = Approval.objects.filter(club=club)
 
-    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":user.club})
+    return render(request, 'club/myclubmanage.html',{"approval_list":approval_list,"club":club})
 
 
 def contact(request):
     return render(request, 'club/contact.html')
+
+
+@login_required(login_url="/club/login")
+def myclublist(request):
+    club_list = request.user.club.all()
+    return render(request, 'club/myclublist.html', {"club_list": club_list})
 
 
 def register(request):
@@ -178,12 +174,12 @@ def visitor_cookie_handler(request):
     # If it's been more than a day since the last visit...
     if (datetime.now() - last_visit_time).seconds > 0:
         visits = visits + 1
-    # Update the last visit cookie now that we have updated the count
-    #     response.set_cookie('last_visit', str(datetime.now()))
+        # Update the last visit cookie now that we have updated the count
+        #     response.set_cookie('last_visit', str(datetime.now()))
         request.session['last_visit'] = str(datetime.now())
     else:
-    # Set the last visit cookie
-    #     response.set_cookie('last_visit', last_visit_cookie)
+        # Set the last visit cookie
+        #     response.set_cookie('last_visit', last_visit_cookie)
         request.session['last_visit'] = last_visit_cookie
 
     # Update/set the visits cookie
@@ -215,8 +211,6 @@ def viewClub(request, club_id):
             message = "CLube does not exist!"
             return render(request, 'club/index.html', {"message":message})
         else:
-            # data = {"name": club["name"], "type": club["type"], "location": club["location"],
-            #         "description": club["description"], "likes": club["likes"], "dislikes": club["dislikes"]}
             member_list = User.objects.filter(club=club)
         return render(request, 'club/clubdetails.html', {"member_list":member_list,"club":club})
     else:

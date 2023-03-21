@@ -12,7 +12,7 @@
     <h1>Evaluate your club</h1>
     <div class="jumbotron">
         <div class="rate-content">
-            <form action="{% url 'club:myclubevaluate' %}" method="post">
+            <form action="{% url 'club:evaluate_club' %}" method="post">
                 {% csrf_token %}
                 <input type="radio" id="like" name="evaluate" value="like">
                 <label for="like">like</label>
