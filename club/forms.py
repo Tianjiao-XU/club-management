@@ -62,8 +62,6 @@ class CreateClubForm(forms.ModelForm):
         ("Academic", "Academic"),
         ("Social & Service", "Social & Service"),
         ("Political", "Political"),
-        ("Religious", "Religious"),
-        ("Ethnic", "Ethnic"),
         ("Animals", "Animals"),
     )
 
