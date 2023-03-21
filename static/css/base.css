@@ -6,6 +6,11 @@ body {
     font-family: Arial;
     margin: 0;
     overflow-wrap: break-word;
+    background-image:url(/static/images/background.jpg);
+    background-size: cover;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    overflow-wrap: break-word;
 }
 
 .navbar {
@@ -28,6 +33,11 @@ body {
     color: black;
 }
 
+.schedule{
+    color: #ffffff;
+    font-size:20px;
+    text-shadow: #000000 1px 1px 2px;
+}
 @media screen and (max-width: 500px) {
     .navbar a {
         float: none;
