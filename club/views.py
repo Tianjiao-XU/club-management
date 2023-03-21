@@ -278,3 +278,32 @@ def joinClub(request):
     else:
         messages.error(request, 'Please log in first!')
         return redirect('/club/login')
+
+
+@login_required(login_url="/club/login")
+def removeMember(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            member_id = request.POST.get("member_id")
+            club_id = request.POST.get("club_id")
+            club = Club.objects.get(id=club_id)
+            if not club:
+                messages.error(request, "Club does not exist!")
+                club_list = request.user.club.all()
+                return render(request, 'club/myclublist.html', {"club_list": club_list})
+            member = User.objects.get(id=member_id)
+            if not member:
+                messages.error(request, "Member does not exist!")
+                member_list = User.objects.filter(club=club)
+                return render(request, 'club/clubdetails.html', {"member_list": member_list, "club": club})
+            if club not in member.club.all():
+                messages.error(request, "User "+member.username+"is not a member of the club!")
+                member_list = User.objects.filter(club=club)
+                return render(request, 'club/clubdetails.html', {"member_list": member_list, "club": club})
+
+            member.club.remove(club)
+            member_list = User.objects.filter(club=club)
+            return render(request, 'club/clubdetails.html', {"member_list": member_list, "club": club})
+    else:
+        messages.error(request, 'Please log in first!')
+        return redirect('/club/login')

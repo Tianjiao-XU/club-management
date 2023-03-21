@@ -19,4 +19,5 @@ urlpatterns = [
     path('deal_approval/', views.dealApproval, name='deal_approval'),
     path('myclublist/', views.myclublist, name='myclublist'),
     path('join_club/', views.joinClub, name='join_club'),
+    path('remove_member/', views.removeMember, name='remove_member'),
 ]
