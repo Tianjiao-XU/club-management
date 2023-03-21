@@ -16,16 +16,7 @@
             <li>{{ message }}</li>
         </div>
     {% endif %}
-    <div class="search">
-        <form method="post" action="{% url 'club:search' %}">
-            {% csrf_token %}
-            <input type="text" class="searchTerm" placeholder="Search by name, type or location" name="key">
-            <button type="submit" class="searchTerm">
-                <i class="fa fa-search"></i>
-            </button>
-        </form>
 
-    </div>
 
 
     <div class="searchbar">
@@ -42,12 +33,12 @@
                     </button>
                 </div>
             </div>
-
-            <div class="searchbar-center">
-                <div class="searchbar-input-spacer"></div>
-                <input type="text" class="searchbar-input" maxlength="2048" name="q" autocapitalize="off"
-                       autocomplete="off" title="Search" role="combobox" placeholder="Search Google">
-            </div>
+                <form class="searchbar-center" method="post" action="{% url 'club:search' %}">
+                    {% csrf_token %}
+                    <div class="searchbar-input-spacer"></div>
+                    <input type="text" class="searchbar-input" maxlength="2048" name="key" autocapitalize="off"
+                       autocomplete="off" title="Search" role="combobox" placeholder="Search by name, type or location">
+                </form>
         </div>
     </div>
 {#    <h1>Search by city</h1>#}
@@ -73,11 +64,9 @@
                 <li>Club type: {{club.type}}</li>
                 <li>Club city: {{club.location}}</li>
                 <li>Like" {{club.likes}}</li>
-                <li class="h3">Description</li>
+                <li>Description</li>
                 <p class="form-control" id="description">{{ club.description }}</p>
-                <p>
-                    <a class="btn" href="#">View details »</a>
-                </p>
+                <p><a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a></p>
             </div>
         {% endfor %}
     </div>
