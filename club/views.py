@@ -281,7 +281,8 @@ def joinClub(request):
             # get current user
             user = request.user
             # only create new approval when this approval does not exist
-            if not Approval.objects.get(user=user, club_id=club_id):
+            approval = Approval.objects.filter(user=user, club_id=club_id).first()
+            if not approval:
                 # create an Approval model and save data
                 approval = Approval(club_id=club_id, user=user)
                 approval.save()
