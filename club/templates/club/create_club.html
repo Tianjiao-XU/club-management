@@ -8,24 +8,10 @@
 {% block body_block %}
     <div class="jumbotron">
     <h1>Create a club</h1>
+    <!-- form -->
     <form id="club_form" method="post" action="/club/create_club/">
         {% csrf_token %}
         <fieldset>
-{#            <div>#}
-{#            <label>Name:</label><br /><input type="text"/><br />#}
-{#            <label>Type:</label><br />#}
-{#            <input type="radio" id="sport" name="type" value="sport">#}
-{#            <label for="sport">sport</label>#}
-{#            <input type="radio" id="social" name="type" value="social">#}
-{#            <label for="social">social</label>#}
-{#            <input type="radio" id="school" name="type" value="school">#}
-{#            <label for="school">school</label>#}
-{#            <input type="radio" id="pet" name="type" value="sport">#}
-{#            <label for="pet">pet</label><br />#}
-{#            <label>Location:</label><br /><input type="text"/><br />#}
-{#            <label>Description:</label><br /><input type="text"/><br />#}
-{#            <p></p>#}
-{#            </div>#}
             {% if club_form.errors %}
               <div class="alert-danger">
                 <ul>

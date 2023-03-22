@@ -1,25 +1,18 @@
 {% extends 'club/base.html' %}
 
 {% block body_block %}
+    <!-- my club base -->
     <div class="row clearfix">
         <div class="col-md-4 column">
             <div class="jumbotron">
                 <h1>Club: {{ club.name }}</h1>
-                <img alt="140x140" src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail"
-                     alt="Responsive image"/>
+                <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
                 <p></p>
-                <div class="jumbotron">
-                    <li class="h2">Type: {{ club.type }}</li>
-                    <li class="h2">City: {{ club.location }}</li>
-                    <li class="h2">Likes:{{ club.likes }}</li>
-                    <li class="h2">Dislikes:{{ club.dislikes }}</li>
-                    {#            <a class="btn" href="#">Join »</a>#}
-                    {#            <a class="btn btn-primary" href="{% url 'club:evaluate_club' %}">Evaluate</a>#}
-                    {#            <p></p>#}
-                    {#            {% if user == club.manager %}#}
-                    {#                <a class="btn btn-primary" href="{% url 'club:manage_club' club_id=club.id %}">Manage</a>#}
-                    {#            {% endif %}#}
-                </div>
+                    <p class="h3">Type: {{ club.type }}</p>
+                    <p class="h3">City: {{ club.location }}</p>
+                    <p class="h3">Likes: {{ club.likes }}</p>
+                    <p class="h3">Dislikes: {{ club.dislikes }}</p>
+                    <p class="h3">Description: {{ club.description }}</p>
             </div>
         </div>
         <div class="col-md-8 column">

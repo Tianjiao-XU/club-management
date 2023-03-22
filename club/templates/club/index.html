@@ -11,11 +11,14 @@
 {% endblock %}
 
 {% block body_block %}
+    <!-- date and time -->
     <div class="schedule">
         <a>Today is <span id="date"></span></a>
         <a><span id="time"></span></a>
         <script src="path/to/your/javascript.js"></script>
     </div>
+
+    <!-- Carousel -->
     <div class="row clearfix">
         <div class="col-md-2 column">
         </div>
@@ -64,19 +67,14 @@
 {% endblock %}
 
 {% block sidebar_block %}
+    <!-- popular clubs -->
     {% for club in club_list %}
         <div class="col-md-4 column">
             <div class="jumbotron">
                 <img src="/static/images/clubtypes/{{ club.type }}.jpg" class="img-thumbnail" alt="Responsive image"/>
-                <h2>
-                    {{ club.name }}
-                </h2>
-                <p>
-                    {{ club.description }}
-                </p>
-                <p>
-                    <a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a>
-                </p>
+                <h2>{{ club.name }}</h2>
+                <p>{{ club.description }}</p>
+                <p><a class="btn" href="{% url 'club:view_club' club_id=club.id %}">View details »</a></p>
             </div>
         </div>
     {% endfor %}

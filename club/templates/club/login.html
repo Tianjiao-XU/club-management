@@ -6,31 +6,33 @@
 
 {% block body_block %}
     <div class="jumbotron">
-    <h1>Login to user</h1>
-    <form id="login_form" method="post" action="{% url 'club:login' %}">
-        {% csrf_token %}
-        {% if login_form.errors %}
-            <div class="alert alert-danger" role="alert">
-                <ul>
-                {% for field_errors in login_form.errors.values %}
-                    {% for error in field_errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-                </ul>
+        <h1>Login to user</h1>
+        <!-- login form -->
+        <form id="login_form" method="post" action="{% url 'club:login' %}">
+            {% csrf_token %}
+            {% if login_form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        {% for field_errors in login_form.errors.values %}
+                            {% for error in field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="form-group">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
             </div>
-        {% endif %}
-        <div class="form-group">
-        <label for="email" class="form-label">Email address</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-        </div>
-        <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password">
-        </div>
-        <button type="submit" class="btn btn-primary">Login</button>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password"
+                       placeholder="Enter your password">
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
 
-        <a href="{% url 'club:register' %}" class="btn btn-success">SignUp</a>
-    </form>
+            <a href="{% url 'club:register' %}" class="btn btn-success">SignUp</a>
+        </form>
     </div>
 {% endblock %}

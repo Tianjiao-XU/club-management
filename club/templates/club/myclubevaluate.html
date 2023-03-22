@@ -9,14 +9,15 @@
 
 
 {% block clubdetails_block %}
+    <!-- evaluate -->
     <h1>Evaluate the club</h1>
     <div class="jumbotron">
         <div class="rate-content">
-             {% if message %}
+            {% if message %}
                 <ul class="alert-danger">
                     {{ message }}
                 </ul>
-             {% endif %}
+            {% endif %}
             <form action="{% url 'club:like_or_dislike_club' %}" method="post">
                 {% csrf_token %}
                 <input type="radio" id="like" name="evaluate" value="like" checked="true">
